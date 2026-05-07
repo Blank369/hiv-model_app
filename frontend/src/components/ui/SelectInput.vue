@@ -10,13 +10,25 @@
 </template>
 
 <script setup>
-defineProps({
+import { onMounted } from 'vue'
+
+const props = defineProps({
   modelValue: String,
   label: String,
   options: {
     type: Array,
     required: true,
     validator: (arr) => arr.every(opt => 'value' in opt && 'label' in opt)
+  },
+  defaultValue: {
+    type: String,
+    default: undefined
+  }
+})
+
+onMounted(() => {
+  if (!props.modelValue && props.defaultValue) {
+    emit('update:modelValue', props.defaultValue)
   }
 })
 
@@ -33,19 +45,19 @@ defineEmits(['update:modelValue'])
 label {
   font-size: 0.85rem;
   font-weight: 500;
-  color: var(--text-secondary, #475569);
+  color: var(--text-secondary);
 }
 select {
   padding: 6px 10px;
-  border: 1px solid var(--border-light, #e2e8f0);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-sm, 6px);
-  background: white;
+  background-color: var(--bg-hover);
   font-family: inherit;
   font-size: 0.9rem;
   cursor: pointer;
 }
 select:focus {
   outline: none;
-  border-color: var(--color-primary, #2563eb);
+  border-color: var(--color-primary);
 }
 </style>

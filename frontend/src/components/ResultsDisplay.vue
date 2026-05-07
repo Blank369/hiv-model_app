@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Accordion title="Результаты моделирования" :isOpen="true">
+    <Accordion title="Результаты моделирования">
       <template #icon>
         <IconGraph/>
       </template>

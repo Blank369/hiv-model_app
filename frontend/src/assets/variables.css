@@ -1,8 +1,8 @@
 :root {
     /* Основные цвета */
-    --color-primary: #1f3a5f;
+    --color-primary: #2563eb;
     --color-primary-dark: #16283f;
-    --color-primary-light: #2b5278;
+    --color-primary-light: #456180;
 
     /* Акцентный scientific teal */
     --accent-main: #1abc9c;
@@ -13,6 +13,7 @@
     --bg-card: #ffffff;
     --bg-sidebar: #eef3f8;
     --bg-hover: #e6edf5;
+    --bg-surface: #F0F8FFFF;
 
     /* Текст */
     --text-primary: #102132;

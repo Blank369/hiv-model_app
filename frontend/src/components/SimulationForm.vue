@@ -5,7 +5,7 @@
       <h3>Параметры модели</h3>
     </div>
 
-    <Accordion title="Начальные условия" :isOpen="true">
+    <Accordion title="Начальные условия">
       <template #icon>
         <IconTable/>
       </template>
@@ -95,6 +95,13 @@
             :options="therapyOptions"
         />
         <NumberInput
+            label="День начала терапии"
+            v-model="localParams.therapy.startday_inf"
+            step="1"
+            :min="0"
+            unit="день"
+        />
+        <NumberInput
             label="ε0_inf"
             v-model="localParams.therapy.epsilon0_inf"
             step="0.05"
@@ -112,6 +119,13 @@
             label="Режим ε_prod"
             v-model="localParams.therapy.mode_prod"
             :options="therapyOptions"
+        />
+        <NumberInput
+            label="День начала терапии"
+            v-model="localParams.therapy.startday_prod"
+            step="1"
+            :min="0"
+            unit="день"
         />
         <NumberInput
             label="ε0_prod"
@@ -183,8 +197,8 @@ const defaultParams = {
   },
   virus: { p: 100, c: 10, phi: 0.001 },
   immune: { s_C: 0.1, alpha: 0.1, h: 100, d_C: 0.01, eta_C: 0.01, q: 100 },
-  therapy: { mode_inf: 'step', epsilon0_inf: 0.9, gamma_inf: 0.01, mode_prod: 'step', epsilon0_prod: 0.8, gamma_prod: 0.01 },
-  sim: { t_max: 500, num_points: 0.001 }
+  therapy: { mode_inf: 'WITHOUT', epsilon0_inf: 0.9, gamma_inf: 0.01, startday_inf: 50, mode_prod: 'WITHOUT', epsilon0_prod: 0.8, gamma_prod: 0.01, startday_prod: 50 },
+  sim: { t_max: 500, num_points: 100 }
 }
 
 const therapyOptions = [
@@ -237,8 +251,8 @@ h3 {
 }
 input, select {
   padding: 4px 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
   font-family: inherit;
   width: 120px;
 }
