@@ -1,0 +1,43 @@
+:root {
+    /* Основные цвета */
+    --color-primary: #1f3a5f;
+    --color-primary-dark: #16283f;
+    --color-primary-light: #2b5278;
+
+    /* Акцентный scientific teal */
+    --accent-main: #1abc9c;
+    --accent-hover: #00a581;
+
+    /* Фоны */
+    --bg-page: #f4f7fb;
+    --bg-card: #ffffff;
+    --bg-sidebar: #eef3f8;
+    --bg-hover: #e6edf5;
+
+    /* Текст */
+    --text-primary: #102132;
+    --text-secondary: #5d7285;
+    --text-light: #fff;
+
+    /* Акценты */
+    --accent-success: #27ae60;
+    --accent-warning: #f39c12;
+    --accent-danger: #d64541;
+    --accent-info: #3498db;
+
+    /* Границы */
+    --border-color: #d9e2ec;
+
+    /* Тени */
+    --shadow-sm: 0 2px 6px rgba(16, 33, 50, 0.05);
+    --shadow-md: 0 6px 18px rgba(16, 33, 50, 0.08);
+
+    /* Радиусы */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+
+    /* Иконки */
+    --un-icon: #1f3a5f;
+    --un-icon-light: #ffffff;
+}
