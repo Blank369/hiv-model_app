@@ -10,7 +10,12 @@
           <IconBook/>
         </template>
 
-        <Accordion title="dT/dt = λ + r·T·(1 - (T+I+L)/T_max) - d_T·T - (1-ε_inf)·β·V·T">
+        <Accordion>
+          <template #title>
+            <code class="equation">
+              dT/dt = λ + r·T·(1 - (T+I+L)/T<sub>max</sub>) - d<sub>T</sub>·T - (1-ε<sub>inf</sub>)·β·V·T
+            </code>
+          </template>
           <div class="description">динамика здоровых CD4⁺-лимфоцитов</div>
           <div class="params-grid">
             <div class="param-item">
@@ -40,7 +45,12 @@
           </div>
         </Accordion>
 
-        <Accordion title="dL/dt = ρ·(1-ε_inf)·β·V·T - a·L - δ_L·L">
+        <Accordion>
+          <template #title>
+            <code class="equation">
+              dL/dt = ρ·(1-ε<sub>inf</sub>)·β·V·T - a·L - δ<sub>L</sub>·L
+            </code>
+          </template>
           <div class="description">динамика латентно инфицированных клеток</div>
           <div class="params-grid">
             <div class="param-item">
@@ -58,7 +68,12 @@
           </div>
         </Accordion>
 
-        <Accordion title="dI/dt = (1-ρ)·(1-ε_inf)·β·V·T + a·L - δ_I·I - κ·C·I">
+        <Accordion>
+          <template #title>
+            <code class="equation">
+              dI/dt = (1-ρ)·(1-ε<sub>inf</sub>)·β·V·T + a·L - δ<sub>I</sub>·I - κ·C·I
+            </code>
+          </template>
           <div class="description">динамика продуктивно инфицированных клеток</div>
           <div class="params-grid">
             <div class="param-item">
@@ -76,7 +91,12 @@
           </div>
         </Accordion>
 
-        <Accordion title="dV/dt = (1-ε_prod)·p·I - c·V - φ·C·V">
+        <Accordion>
+          <template #title>
+            <code class="equation">
+              dV/dt = (1-ε<sub>prod</sub>)·p·I - c·V - φ·C·V
+            </code>
+          </template>
           <div class="description">динамика свободных вирусных частиц</div>
           <div class="params-grid">
             <div class="param-item">
@@ -98,7 +118,12 @@
           </div>
         </Accordion>
 
-        <Accordion title="dC/dt = s_C + (α·T·C)/(T·C + h) - d_C·C - η_C·C·I/(I+q)">
+        <Accordion>
+          <template #title>
+            <code class="equation">
+              dC/dt = s<sub>C</sub> + (α·T·C)/(T·C + h) - d<sub>C</sub>·C - η<sub>C</sub>·C·I/(I+q)
+            </code>
+          </template>
           <div class="description">динамика эффекторных иммунных клеток (CTL)</div>
           <div class="params-grid">
             <div class="param-item">
@@ -260,7 +285,7 @@ import IconQuestion from "@/components/icons/IconQuestion.vue";
   gap: 12px;
   padding: 8px 12px;
   background: var(--bg-sidebar);
-  border-radius: var(--radius-sm, 6px);
+  border-radius: var(--radius-sm);
 }
 
 .mode-badge {
@@ -278,6 +303,17 @@ import IconQuestion from "@/components/icons/IconQuestion.vue";
 .mode span:last-child {
   font-size: 0.85rem;
   color: var(--text-primary);
+}
+
+.equation {
+  font-family: 'Courier New', 'SF Mono', 'Fira Code', monospace;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  letter-spacing: 0.5px;
+}
+
+.equation sub {
+  font-size: 0.7rem;
 }
 
 </style>

@@ -2,7 +2,9 @@
   <details :open="isOpen">
     <summary>
       <slot name="icon"></slot>
-      {{ title }}
+      <slot name="title">
+        {{ title }}
+      </slot>
     </summary>
     <div class="content">
       <slot/>
@@ -11,7 +13,6 @@
 </template>
 
 <script setup>
-import IconCommunity from "@/components/icons/IconCommunity.vue";
 
 defineProps({
   title: String,
