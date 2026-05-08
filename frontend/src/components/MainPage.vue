@@ -2,21 +2,60 @@
   <div class="app-container">
 
     <aside class="sidebar">
-      <SimulationForm />
+      <SimulationForm @run="handleRun"/>
     </aside>
 
     <main class="content">
-      <ModelDescription />
+      <ModelDescription :is-results-ready="isReady"/>
       <hr />
-      <ResultsDisplay />
+      <ProgressBar :loading="loading" />
+
+      <ResultsDisplay
+          :results="results"
+          :is-results-ready="isReady"
+      />
     </main>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import SimulationForm from "@/components/SimulationForm.vue";
 import ModelDescription from "@/components/ModelDescription.vue";
 import ResultsDisplay from "@/components/ResultsDisplay.vue";
+import { simulationService } from '@/services/SimulationService'
+import ProgressBar from "@/components/ui/ProgressBar.vue";
+
+const results = ref(null)
+const loading = ref(false)
+const error = ref(null)
+const isReady = ref(false)
+
+async function handleRun(formParams) {
+  loading.value = true
+  error.value = null
+  isReady.value = false
+
+  const payload = {
+    initials: formParams.initials,
+    biological: formParams.biological,
+    virus: formParams.virus,
+    immune: formParams.immune,
+    therapy: formParams.therapy,
+    sim: formParams.sim
+  }
+
+  const response = await simulationService.simulate(payload)
+
+  if (response.success) {
+    results.value = response.data
+    isReady.value = true
+  } else {
+    error.value = response.error
+  }
+
+  loading.value = false
+}
 </script>
 
 <style>

@@ -1,58 +1,57 @@
 <template>
-  <BigContainer title="Результаты моделирования">
+  <Panel title="Результаты моделирования">
     <template #icon>
       <IconGraph/>
     </template>
 
-    <Accordion title="📈 Динамика всех переменных">
-      <div class="plot-container">
-        <LineChart :data="allVariablesChart" :options="chartOptions" />
-      </div>
-    </Accordion>
-
-    <Accordion title="🔬 Графики переменных" :isOpen="false">
+    <Accordion title="Графики переменных" :isOpen="isOpen">
+      <template #icon>
+        <IconChart/>
+      </template>
       <div class="plots-grid">
         <div class="single-plot">
           <h4>CD4⁺-лимфоциты (T)</h4>
-          <LineChart :data="tCellChart" :options="simpleOptions" />
+          <LineChart :data="TChart" :options="simpleOptions" />
         </div>
         <div class="single-plot">
           <h4>Вирусная нагрузка (V)</h4>
-          <LineChart :data="virusChart" :options="simpleOptions" />
+          <LineChart :data="VChart" :options="simpleOptions" />
         </div>
         <div class="single-plot">
           <h4>Латентный резервуар (L)</h4>
-          <LineChart :data="latentChart" :options="simpleOptions" />
+          <LineChart :data="LChart" :options="simpleOptions" />
         </div>
         <div class="single-plot">
           <h4>Продуктивные клетки (I)</h4>
-          <LineChart :data="infectedChart" :options="simpleOptions" />
+          <LineChart :data="IChart" :options="simpleOptions" />
         </div>
         <div class="single-plot">
           <h4>Эффекторные клетки (C)</h4>
-          <LineChart :data="ctlChart" :options="simpleOptions" />
+          <LineChart :data="CChart" :options="simpleOptions" />
         </div>
       </div>
     </Accordion>
 
     <Accordion
         v-if="hasTherapy"
-        title="💊 Эффективность терапии"
+        title="Эффективность терапии"
         :isOpen="false"
     >
       <div class="plot-container">
-        <LineChart :data="therapyChart" :options="therapyOptions" />
+        <LineChart :data="EChart" :options="therapyOptions" />
       </div>
     </Accordion>
-  </BigContainer>
+  </Panel>
 </template>
 
 <script setup>
 import { computed } from 'vue'
 import Accordion from "@/components/ui/Accordion.vue";
 import LineChart from "@/components/ui/LineChart.vue";
-import BigContainer from "@/components/ui/BigContainer.vue";
+import Panel from "@/components/ui/Panel.vue";
 import IconGraph from "@/components/icons/IconGraph.vue";
+import IconChart from "@/components/icons/IconChart.vue";
+import { chartColors } from '@/assets/css/chartColors.js'
 
 const props = defineProps({
   results: {
@@ -62,124 +61,75 @@ const props = defineProps({
   therapyEps: {
     type: Object,
     default: null
-  }
+  },
+  isResultsReady: Boolean
+})
+
+const isOpen = computed(() => {
+  return props.results && props.isResultsReady
 })
 
 const hasTherapy = computed(() => {
   return props.therapyEps && props.therapyEps.eps_inf?.some(v => v > 0)
 })
 
-// Основной график: все переменные
-const allVariablesChart = computed(() => {
-  if (!props.results) return { labels: [], datasets: [] }
-
-  const colors = {
-    T: '#2563eb',
-    L: '#eab308',
-    I: '#f97316',
-    C: '#22c55e'
-  }
-
-  return {
-    labels: props.results.t,
-    datasets: [
-      {
-        label: 'T (CD4⁺)',
-        data: props.results.T,
-        borderColor: colors.T,
-        backgroundColor: 'transparent',
-        tension: 0.3,
-        borderWidth: 2
-      },
-      {
-        label: 'L (латентные)',
-        data: props.results.L,
-        borderColor: colors.L,
-        backgroundColor: 'transparent',
-        tension: 0.3,
-        borderWidth: 1.5,
-        borderDash: [5, 5]
-      },
-      {
-        label: 'I (продуктивные)',
-        data: props.results.I,
-        borderColor: colors.I,
-        backgroundColor: 'transparent',
-        tension: 0.3,
-        borderWidth: 1.5,
-        borderDash: [3, 3]
-      },
-      {
-        label: 'C (CTL)',
-        data: props.results.C,
-        borderColor: colors.C,
-        backgroundColor: 'transparent',
-        tension: 0.3,
-        borderWidth: 2
-      }
-    ]
-  }
-})
-
-// Отдельные графики
-const tCellChart = computed(() => ({
+const TChart = computed(() => ({
   labels: props.results?.t || [],
   datasets: [{
     label: 'CD4⁺ (кл/мкл)',
     data: props.results?.T || [],
-    borderColor: '#2563eb',
-    backgroundColor: 'rgba(37, 99, 235, 0.1)',
+    borderColor: chartColors.T,
+    backgroundColor: 'transparent',
     fill: true,
     tension: 0.3
   }]
 }))
 
-const virusChart = computed(() => ({
-  labels: props.results?.t || [],
-  datasets: [{
-    label: 'Вирус (копий/мл)',
-    data: props.results?.V || [],
-    borderColor: '#ef4444',
-    backgroundColor: 'transparent',
-    tension: 0.3
-  }]
-}))
-
-const ctlChart = computed(() => ({
-  labels: props.results?.t || [],
-  datasets: [{
-    label: 'CTL (кл/мкл)',
-    data: props.results?.C || [],
-    borderColor: '#22c55e',
-    backgroundColor: 'transparent',
-    tension: 0.3
-  }]
-}))
-
-const latentChart = computed(() => ({
+const LChart = computed(() => ({
   labels: props.results?.t || [],
   datasets: [{
     label: 'Латентные (кл/мкл)',
     data: props.results?.L || [],
-    borderColor: '#eab308',
+    borderColor: chartColors.L,
     backgroundColor: 'transparent',
     tension: 0.3
   }]
 }))
 
-const infectedChart = computed(() => ({
+const IChart = computed(() => ({
   labels: props.results?.t || [],
   datasets: [{
     label: 'Продуктивные (кл/мкл)',
     data: props.results?.I || [],
-    borderColor: '#f97316',
+    borderColor: chartColors.I,
     backgroundColor: 'transparent',
     tension: 0.3
   }]
 }))
 
-// Терапия
-const therapyChart = computed(() => {
+const VChart = computed(() => ({
+  labels: props.results?.t || [],
+  datasets: [{
+    label: 'Вирус (копий/мл)',
+    data: props.results?.V || [],
+    borderColor: chartColors.V,
+    backgroundColor: 'transparent',
+    tension: 0.3
+  }]
+}))
+
+const CChart = computed(() => ({
+  labels: props.results?.t || [],
+  datasets: [{
+    label: 'CTL (кл/мкл)',
+    data: props.results?.C || [],
+    borderColor: chartColors.C,
+    backgroundColor: 'transparent',
+    tension: 0.3
+  }]
+}))
+
+const EChart = computed(() => {
   if (!props.therapyEps || !props.results) return { labels: [], datasets: [] }
 
   return {
@@ -188,7 +138,7 @@ const therapyChart = computed(() => {
       {
         label: 'ε_inf',
         data: props.therapyEps.eps_inf,
-        borderColor: '#2563eb',
+        borderColor: chartColors.eps_inf,
         backgroundColor: 'transparent',
         tension: 0.3,
         borderWidth: 2
@@ -196,7 +146,7 @@ const therapyChart = computed(() => {
       {
         label: 'ε_prod',
         data: props.therapyEps.eps_prod,
-        borderColor: '#f97316',
+        borderColor: chartColors.eps_prod,
         backgroundColor: 'transparent',
         tension: 0.3,
         borderWidth: 2

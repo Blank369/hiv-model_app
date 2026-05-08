@@ -1,10 +1,10 @@
 <template>
-  <BigContainer title="Математическая модель взаимодействия ВИЧ и иммунной системы человека">
+  <Panel title="Математическая модель взаимодействия ВИЧ и иммунной системы человека">
   <template #icon>
     <IconQuestion/>
   </template>
     <div class="card-body">
-      <Accordion title="Уравнения модели" :isOpen="true">
+      <Accordion title="Уравнения модели" :isOpen="isOpen">
         <template #icon>
           <IconBook/>
         </template>
@@ -187,14 +187,23 @@
         </div>
       </Accordion>
     </div>
-  </BigContainer>
+  </Panel>
 </template>
 <script setup lang="ts">
 import IconBook from "@/components/icons/IconBook.vue";
 import Accordion from "@/components/ui/Accordion.vue";
 import IconMicroscope from "@/components/icons/IconMicroscope.vue";
 import IconQuestion from "@/components/icons/IconQuestion.vue";
-import BigContainer from "@/components/ui/BigContainer.vue";
+import Panel from "@/components/ui/Panel.vue";
+import {computed} from "vue";
+
+const props = defineProps({
+  isResultsReady: Boolean
+})
+
+const isOpen = computed(() => {
+  return !props.isResultsReady
+})
 </script>
 
 <style>
