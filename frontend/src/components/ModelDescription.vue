@@ -1,9 +1,8 @@
 <template>
-  <div class="model-card">
-    <div class="card-header">
-      <IconQuestion class="header-icon"/>
-      <h2>Математическая модель взаимодействия ВИЧ и иммунной системы человека</h2>
-    </div>
+  <BigContainer title="Математическая модель взаимодействия ВИЧ и иммунной системы человека">
+  <template #icon>
+    <IconQuestion/>
+  </template>
     <div class="card-body">
       <Accordion title="Уравнения модели" :isOpen="true">
         <template #icon>
@@ -188,48 +187,22 @@
         </div>
       </Accordion>
     </div>
-  </div>
+  </BigContainer>
 </template>
 <script setup lang="ts">
 import IconBook from "@/components/icons/IconBook.vue";
 import Accordion from "@/components/ui/Accordion.vue";
 import IconMicroscope from "@/components/icons/IconMicroscope.vue";
 import IconQuestion from "@/components/icons/IconQuestion.vue";
+import BigContainer from "@/components/ui/BigContainer.vue";
 </script>
 
 <style>
-.model-card {
-  background: var(--bg-card);
-  border-radius: var(--radius-lg, 12px);
-  border: 1px solid var(--border-color);
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-
-.card-body{
-  padding: 1rem;
-}
-
-.card-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 16px 20px;
-  background: var(--bg-hover);
-  border-bottom: 1px solid var(--border-color);
-}
-
 .card-header h2 {
   margin: 0;
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--text-primary);
-}
-
-.header-icon {
-  width: 24px;
-  height: 24px;
-  color: var(--color-primary);
 }
 
 .description {

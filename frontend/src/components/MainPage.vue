@@ -37,7 +37,8 @@ import ResultsDisplay from "@/components/ResultsDisplay.vue";
   border-right: 1px solid var(--border-color);
   overflow-y: auto;
   scrollbar-gutter: stable;
-  padding: 1rem;
+  padding: 1.5rem 0 1.5rem 1rem;
+
 }
 .content {
   flex: 1;

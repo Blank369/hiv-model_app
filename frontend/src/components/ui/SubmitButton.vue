@@ -14,12 +14,13 @@
   background: var(--accent-main);
   color: var(--text-light);
   padding: 12px;
+  width: 100%;
   border: none;
   border-radius: var(--radius-lg);
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 16px;
+  margin-top: 2rem;
   transition: all 0.2s;
   display: flex;
   justify-content: space-between;

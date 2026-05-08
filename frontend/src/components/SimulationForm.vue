@@ -1,10 +1,8 @@
 <template>
-  <div class="params-panel">
-    <div class="params__title">
+  <BigContainer title="Параметры модели">
+    <template #icon>
       <IconGear/>
-      <h3>Параметры модели</h3>
-    </div>
-
+    </template>
     <Accordion title="Начальные условия">
       <template #icon>
         <IconTable/>
@@ -170,7 +168,7 @@
       </template>
       ЗАПУСТИТЬ
     </SubmitButton>
-  </div>
+  </BigContainer>
 </template>
 
 <script setup>
@@ -188,6 +186,8 @@ import SubmitButton from "@/components/ui/SubmitButton.vue";
 import SliderInput from "@/components/ui/SliderInput.vue";
 import NumberInput from "@/components/ui/NumberInput.vue";
 import SelectInput from "@/components/ui/SelectInput.vue";
+import BigContainer from "@/components/ui/BigContainer.vue";
+import IconGraph from "@/components/icons/IconGraph.vue";
 
 const defaultParams = {
   initials: { T: 1000, L: 0, I: 0.1, V: 100, C: 50 },
@@ -211,50 +211,3 @@ const therapyOptions = [
 const localParams = reactive(defaultParams)
 
 </script>
-
-<style scoped>
-.params-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  background-color: var(--bg-sidebar);
-}
-.params__title{
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-right: 10px;
-}
-
-h3 {
-  margin-bottom: 12px;
-  padding-left: 6px;
-}
-.param-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.param-group label {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  font-size: 0.9rem;
-}
-.param-grid label {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.85rem;
-  gap: 8px;
-}
-input, select {
-  padding: 4px 8px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color);
-  font-family: inherit;
-  width: 120px;
-}
-
-</style>
