@@ -48,7 +48,7 @@ function startProgress() {
     if (progress.value < 90) {
       progress.value += 5
     }
-  }, 200)
+  }, 20)
 }
 
 function stopProgress() {

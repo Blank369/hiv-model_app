@@ -1,5 +1,5 @@
 from math import exp, pi, sin
-from ..model.therapy_modes import TherapyModes
+from ..model.TherapyModes import TherapyModes
 
 def calculate_epsilon(e0, mode, gamma, t):
     if mode == TherapyModes.THERAPY:
