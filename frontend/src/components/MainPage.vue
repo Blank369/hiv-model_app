@@ -2,7 +2,7 @@
   <div class="app-container">
 
     <aside class="sidebar">
-      <SimulationForm @run="handleRun"/>
+      <SimulationForm @run="handleRun" :loading="loading"/>
     </aside>
 
     <main class="content">

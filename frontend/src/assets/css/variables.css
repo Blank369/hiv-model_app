@@ -7,6 +7,7 @@
     /* Акцентный scientific teal */
     --accent-main: #1abc9c;
     --accent-hover: #00a581;
+    --accent-disabled: #65736a;
 
     /* Фоны */
     --bg-page: #f4f7fb;

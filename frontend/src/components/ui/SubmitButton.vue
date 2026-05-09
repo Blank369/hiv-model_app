@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <button class="submit__btn" type="submit">
+  <button class="submit__btn" type="submit" :disabled="disabled">
     <slot/>
     <slot name="icon"></slot>
   </button>
@@ -29,5 +29,9 @@
 .submit__btn:hover {
   background: var(--accent-hover);
   transform: scale(1.01);
+}
+.submit__btn:disabled{
+  background-color: var(--accent-disabled);
+  transform: none;
 }
 </style>

@@ -295,7 +295,7 @@
       </div>
     </Accordion>
 
-    <SubmitButton @click="simulationRun">
+    <SubmitButton @click="simulationRun" :disabled="isDisabled">
       <template #icon>
         <IconLaboratory/>
       </template>
@@ -305,7 +305,7 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import {computed, reactive} from 'vue'
 import IconTime from "@/components/icons/IconTime.vue";
 import IconCells from "@/components/icons/IconCells.vue";
 import IconVirus from "@/components/icons/IconVirus.vue";
@@ -320,6 +320,14 @@ import SliderInput from "@/components/ui/SliderInput.vue";
 import NumberInput from "@/components/ui/NumberInput.vue";
 import SelectInput from "@/components/ui/SelectInput.vue";
 import Panel from "@/components/ui/Panel.vue";
+
+const props = defineProps({
+  loading: Boolean
+})
+
+const isDisabled = computed(() => {
+  return props.loading
+})
 
 const defaultParams = reactive({
   initials: { T: 1000, L: 0, I: 0.1, V: 100, C: 50 },
