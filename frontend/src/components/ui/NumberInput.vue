@@ -14,6 +14,7 @@
       />
       <span v-if="unit" class="unit">{{ unit }}</span>
     </div>
+    <span v-if="clue" class="clue">[{{ clue }}]</span>
     <span v-if="error" class="error-message">{{ error }}</span>
   </div>
 </template>
@@ -30,7 +31,8 @@ const props = defineProps({
   unit: String,
   disabled: Boolean,
   placeholder: String,
-  required: Boolean
+  required: Boolean,
+  clue: String
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -68,7 +70,7 @@ function updateValue(value) {
 label {
   font-size: 0.85rem;
   font-weight: 500;
-  color: var(--text-secondary, #475569);
+  color: var(--text-secondary);
 }
 .input-container {
   display: flex;
@@ -78,7 +80,7 @@ label {
 input {
   flex: 1;
   padding: 6px 10px;
-  border: 1px solid var(--border-color, #e2e8f0);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-sm, 6px);
   font-family: inherit;
   font-size: 0.9rem;
@@ -86,19 +88,24 @@ input {
 }
 input:focus {
   outline: none;
-  border-color: var(--color-primary, #2563eb);
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
 }
 .unit {
   font-size: 0.8rem;
-  color: var(--text-secondary, #94a3b8);
+  color: var(--text-secondary);
   min-width: 50px;
 }
 .error-message {
   font-size: 0.75rem;
-  color: var(--accent-danger, #ef4444);
+  color: var(--accent-danger);
 }
 .has-error input {
-  border-color: var(--accent-danger, #ef4444);
+  border-color: var(--accent-danger);
+}
+.clue{
+  font-size: 0.7rem;
+  text-align: right;
+  color: var(--text-secondary);
 }
 </style>
