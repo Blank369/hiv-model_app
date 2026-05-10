@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from ..core import run_simulation
+from ..utils import download_result
 
 app = FastAPI(title="HIV Model API")
 
@@ -19,3 +20,7 @@ async def check():
 @app.post("/simulate")
 async def simulate(request: dict):
     return run_simulation(request)
+
+@app.get("/download-results")
+async def download_results():
+    return download_result()

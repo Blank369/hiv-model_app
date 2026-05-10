@@ -41,6 +41,23 @@
         <LineChart :data="EChart" :options="therapyOptions" />
       </div>
     </Accordion>
+
+    <Accordion title="Скачать результаты">
+      <template #icon>
+        <IconDownload/>
+      </template>
+      <Button
+          type="button"
+          class="download__btn"
+          @click="$emit('download')"
+          :disabled="!isResultsReady"
+      >
+        <template #icon>
+          <IconTxt/>
+        </template>
+        Скачать в .txt
+      </Button>
+    </Accordion>
   </Panel>
 </template>
 
@@ -52,6 +69,9 @@ import Panel from "@/components/ui/Panel.vue";
 import IconGraph from "@/components/icons/IconGraph.vue";
 import IconChart from "@/components/icons/IconChart.vue";
 import { chartColors } from '@/assets/css/chartColors.js'
+import Button from "@/components/ui/Button.vue";
+import IconTxt from "@/components/icons/IconTxt.vue";
+import IconDownload from "@/components/icons/IconDownload.vue";
 
 const props = defineProps({
   results: {
@@ -62,8 +82,13 @@ const props = defineProps({
     type: Object,
     default: null
   },
-  isResultsReady: Boolean
+  isResultsReady: {
+    type: Boolean,
+    default: false
+  }
 })
+
+defineEmits(['download'])
 
 const isOpen = computed(() => {
   return props.results && props.isResultsReady

@@ -57,4 +57,15 @@ button:disabled{
   background-color: var(--accent-danger-hover);
 }
 
+.download__btn {
+  margin-top: 1rem;
+  background-color: var(--color-primary);
+  color: var(--text-light);
+  width: 20%;
+  min-width: 10rem;
+}
+.download__btn:hover {
+  background-color: var(--color-primary-light);
+}
+
 </style>

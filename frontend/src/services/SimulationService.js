@@ -1,7 +1,7 @@
 import apiClient from '@/api'
+import { createAbortController, handleApiError, downloadBlob, getTimestampedFilename} from "@/utils/apiHelpers.js";
 
 export const simulationService = {
-    // Хранилище для контроллера отмены
     abortController: null,
 
     async simulate(params) {
@@ -9,20 +9,14 @@ export const simulationService = {
             this.abortController.abort()
         }
 
-        this.abortController = new AbortController()
+        const { controller, signal } = createAbortController()
+        this.abortController = controller
 
         try {
-            const response = await apiClient.post('/simulate', params, {
-                signal: this.abortController.signal
-            })
+            const response = await apiClient.post('/simulate', params, { signal })
             return { success: true, data: response.data }
         } catch (error) {
-            if (error.name === 'AbortError' || error.code === 'ERR_CANCELED') {
-                return { success: false, error: 'Расчет прерван', aborted: true }
-            }
-            return {
-                success: false,
-            }
+            return handleApiError(error, 'Не удалось выполнить расчёт')
         } finally {
             this.abortController = null
         }
@@ -40,8 +34,22 @@ export const simulationService = {
             const response = await apiClient.get('/check')
             return { success: true, data: response.data }
         } catch (error) {
-            console.error('Ошибка при вызове /health:', error)
-            return { success: false, error: 'Сервер недоступен' }
+            return handleApiError(error, 'Сервер недоступен')
+        }
+    },
+
+    async downloadResult() {
+        try {
+            const response = await apiClient.get('/download-results', {
+                responseType: 'blob'
+            })
+
+            const filename = getTimestampedFilename('results')
+            downloadBlob(response.data, filename)
+
+            return { success: true }
+        } catch (error) {
+            return handleApiError(error, 'Не удалось скачать файл')
         }
     }
 }

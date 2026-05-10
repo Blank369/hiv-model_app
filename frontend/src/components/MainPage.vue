@@ -13,6 +13,7 @@
       <ResultsDisplay
           :results="results"
           :is-results-ready="isReady"
+          @download="handleDownload"
       />
     </main>
   </div>
@@ -24,7 +25,6 @@ import SimulationForm from "@/components/SimulationForm.vue";
 import ModelDescription from "@/components/ModelDescription.vue";
 import ResultsDisplay from "@/components/ResultsDisplay.vue";
 import { simulationService } from '@/services/SimulationService'
-import ProgressBar from "@/components/ui/ProgressBar.vue";
 
 const results = ref(null)
 const loading = ref(false)
@@ -61,6 +61,13 @@ function handleAbort() {
   simulationService.abort()
   loading.value = false
   error.value = 'Расчет прерван пользователем'
+}
+
+async function handleDownload() {
+  const response = await simulationService.downloadResult()
+  if (!response.success) {
+    console.error(response.error)
+  }
 }
 </script>
 

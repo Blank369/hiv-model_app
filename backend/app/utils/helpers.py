@@ -1,6 +1,8 @@
 from pathlib import Path
 import json
 
+from starlette.responses import FileResponse
+
 RESULTS_DIR = Path("results")
 RESULTS_DIR.mkdir(exist_ok=True)
 
@@ -23,3 +25,13 @@ def write_table(filename: str, result, t, params: dict = None):
         for time_value, row in zip(t, result):
             values = "\t".join(f"{x:.4f}" for x in row)
             file.write(f"{time_value:.4f}\t{values}\n")
+
+def download_result():
+    file_path = RESULTS_DIR / "result.txt"
+    if not file_path.exists():
+        return {"error": "File not found"}
+    return FileResponse(
+        path=file_path,
+        filename="simulation_results.txt",
+        media_type="text/plain"
+    )
