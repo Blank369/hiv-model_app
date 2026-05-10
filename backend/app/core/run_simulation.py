@@ -5,6 +5,7 @@ from .init_simulation_helpers import (
     create_diff_eq_classes,
     create_epsilon,
     create_time_params,
+    create_params_dict,
     format_response
 )
 from .solve_model import solve_model
@@ -17,7 +18,8 @@ def run_simulation(request_data: dict) -> dict:
     dT, dL, dI, dV, dC = create_diff_eq_classes(bio_params)
     epsilon = create_epsilon(therapy)
     time_params = create_time_params(sim)
+    params_dict = create_params_dict(initials, bio, virus, immune, therapy, sim)
 
-    t, result = solve_model(initial_conditions, time_params, dT, dL, dI, dV, dC, epsilon)
+    t, result = solve_model(initial_conditions, time_params, dT, dL, dI, dV, dC, epsilon, params_dict)
 
     return format_response(t, result)

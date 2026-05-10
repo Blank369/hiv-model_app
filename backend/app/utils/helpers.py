@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 
 RESULTS_DIR = Path("results")
 RESULTS_DIR.mkdir(exist_ok=True)
@@ -9,10 +10,16 @@ def get_file_path(filename: str) -> Path:
 def clear_file(filepath: Path) -> None:
     filepath.write_text("", encoding="utf-8")
 
-def write_table(filename: str, result, t):
+
+def write_table(filename: str, result, t, params: dict = None):
     filepath = get_file_path(filename)
 
     with open(filepath, "w", encoding="utf-8") as file:
+        if params:
+            file.write("=== ПАРАМЕТРЫ МОДЕЛИ ===\n")
+            file.write(json.dumps(params, indent=2, ensure_ascii=False))
+            file.write("\n\n=== РЕЗУЛЬТАТЫ ===\n")
+
         for time_value, row in zip(t, result):
             values = "\t".join(f"{x:.4f}" for x in row)
             file.write(f"{time_value:.4f}\t{values}\n")

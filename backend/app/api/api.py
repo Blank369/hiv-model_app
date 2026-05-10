@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from ..core.run_simulation import run_simulation
+from ..core import run_simulation
 
 app = FastAPI(title="HIV Model API")
 
