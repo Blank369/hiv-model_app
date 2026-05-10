@@ -10,7 +10,7 @@
       </template>
       <div class="plots-grid">
         <div class="single-plot">
-          <h4>CD4⁺-лимфоциты (T)</h4>
+          <h4>CD4+-лимфоциты (T)</h4>
           <LineChart :data="TChart" :options="cellChartOptions" />
         </div>
         <div class="single-plot">
@@ -29,7 +29,7 @@
           <h4>Эффекторные клетки (C)</h4>
           <LineChart :data="CChart" :options="cellChartOptions" />
         </div>
-        <div v-if="hasTherapy" class="single-plot">
+        <div class="single-plot">
           <h4>Эффективность терапии</h4>
           <LineChart :data="EChart" :options="therapyChartOptions" />
         </div>
@@ -91,14 +91,7 @@ const isOpen = computed(() => {
   return props.results && props.isResultsReady
 })
 
-const hasTherapy = computed(() => {
-  if (!props.results) return false
-  const epsInf = props.results.eps_inf
-  const epsProd = props.results.eps_prod
-  return (epsInf && epsInf.some(v => v > 0)) || (epsProd && epsProd.some(v => v > 0))
-})
-
-const TChart = computed(() => createChartData(props.results?.t, props.results?.T, 'CD4⁺ (кл/мкл)', chartColors.T, { fill: true }))
+const TChart = computed(() => createChartData(props.results?.t, props.results?.T, 'CD4+ (кл/мкл)', chartColors.T, { fill: true }))
 const LChart = computed(() => createChartData(props.results?.t, props.results?.L, 'Латентные (кл/мкл)', chartColors.L))
 const IChart = computed(() => createChartData(props.results?.t, props.results?.I, 'Продуктивные (кл/мкл)', chartColors.I))
 const VChart = computed(() => createChartData(props.results?.t, props.results?.V, 'Вирус (копий/мл)', chartColors.V))

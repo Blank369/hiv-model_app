@@ -12,30 +12,30 @@
         <Accordion>
           <template #title>
             <code class="equation">
-              dT/dt = λ + r·T·(1 - (T+I+L)/T<sub>max</sub>) - d<sub>T</sub>·T - (1-ε<sub>inf</sub>)·β·V·T
+              dT/dt = λ + r·T·(1 - (T+I+L)/T<sub>max</sub>) - d<sub>T</sub>·T - (1-ε<sub>inf</sub>(t))·β·V·T
             </code>
           </template>
-          <div class="description">динамика здоровых CD4⁺-лимфоцитов</div>
+          <div class="description">динамика здоровых CD4+-лимфоцитов</div>
           <div class="params-grid">
             <div class="param-item">
               <span class="param-name">λ</span>
-              <span class="param-desc">скорость поступления наивных CD4⁺-клеток из тимуса</span>
+              <span class="param-desc">естественный приток CD4+-клеток из тимуса</span>
             </div>
             <div class="param-item">
               <span class="param-name">r</span>
-              <span class="param-desc">максимальная скорость пролиферации CD4⁺-клеток</span>
+              <span class="param-desc">скорость пролиферации CD4+-клеток</span>
             </div>
             <div class="param-item">
               <span class="param-name">T_max</span>
-              <span class="param-desc">максимальная емкость популяции CD4⁺</span>
+              <span class="param-desc">предельная емкость CD4+-клеток</span>
             </div>
             <div class="param-item">
               <span class="param-name">d_T</span>
-              <span class="param-desc">скорость естественной гибели CD4⁺</span>
+              <span class="param-desc">скорость естественной гибели CD4+-клеток</span>
             </div>
             <div class="param-item">
               <span class="param-name">β</span>
-              <span class="param-desc">константа скорости инфицирования клеток вирусом</span>
+              <span class="param-desc">скорость инфицирования CD4+-клеток вирусом</span>
             </div>
             <div class="param-item">
               <span class="param-name">ε_inf</span>
@@ -47,14 +47,14 @@
         <Accordion>
           <template #title>
             <code class="equation">
-              dL/dt = ρ·(1-ε<sub>inf</sub>)·β·V·T - a·L - δ<sub>L</sub>·L
+              dL/dt = ρ·(1-ε<sub>inf</sub>(t))·β·V·T - a·L - δ<sub>L</sub>·L
             </code>
           </template>
           <div class="description">динамика латентно инфицированных клеток</div>
           <div class="params-grid">
             <div class="param-item">
               <span class="param-name">ρ</span>
-              <span class="param-desc">доля зараженных клеток, идущих в латентный резервуар</span>
+              <span class="param-desc">доля латентно инфицированных CD4+-клеток</span>
             </div>
             <div class="param-item">
               <span class="param-name">a</span>
@@ -62,7 +62,7 @@
             </div>
             <div class="param-item">
               <span class="param-name">δ_L</span>
-              <span class="param-desc">скорость гибели латентно инфицированных клеток</span>
+              <span class="param-desc">скорость гибели латентных клеток</span>
             </div>
           </div>
         </Accordion>
@@ -70,7 +70,7 @@
         <Accordion>
           <template #title>
             <code class="equation">
-              dI/dt = (1-ρ)·(1-ε<sub>inf</sub>)·β·V·T + a·L - δ<sub>I</sub>·I - κ·C·I
+              dI/dt = (1-ρ)·(1-ε<sub>inf</sub>(t))·β·V·T + a·L - δ<sub>I</sub>·I - κ·C·I
             </code>
           </template>
           <div class="description">динамика продуктивно инфицированных клеток</div>
@@ -84,7 +84,7 @@
               <span class="param-desc">скорость уничтожения инфицированных клеток CTL</span>
             </div>
             <div class="param-item">
-              <span class="param-name">C</span>
+              <span class="param-name">c</span>
               <span class="param-desc">концентрация эффекторных CTL-клеток</span>
             </div>
           </div>
@@ -93,14 +93,14 @@
         <Accordion>
           <template #title>
             <code class="equation">
-              dV/dt = (1-ε<sub>prod</sub>)·p·I - c·V - φ·C·V
+              dV/dt = (1-ε<sub>prod</sub>(t))·p·I - c·V - φ·C·V
             </code>
           </template>
           <div class="description">динамика свободных вирусных частиц</div>
           <div class="params-grid">
             <div class="param-item">
               <span class="param-name">p</span>
-              <span class="param-desc">скорость продукции вируса инфицированными клетками</span>
+              <span class="param-desc">скорость продукции новых вирионов инфицированными клетками</span>
             </div>
             <div class="param-item">
               <span class="param-name">c</span>
@@ -127,15 +127,15 @@
           <div class="params-grid">
             <div class="param-item">
               <span class="param-name">s_C</span>
-              <span class="param-desc">постоянный приток CTL-клеток</span>
+              <span class="param-desc">естественный приток CTL-клеток</span>
             </div>
             <div class="param-item">
               <span class="param-name">α</span>
-              <span class="param-desc">скорость активации CTL при стимуляции CD4⁺</span>
+              <span class="param-desc">скорость активации CTL при стимуляции CD4+</span>
             </div>
             <div class="param-item">
               <span class="param-name">h</span>
-              <span class="param-desc">константа насыщения активации</span>
+              <span class="param-desc">коэффициент насыщения активации CTL</span>
             </div>
             <div class="param-item">
               <span class="param-name">d_C</span>
@@ -143,11 +143,11 @@
             </div>
             <div class="param-item">
               <span class="param-name">η_C</span>
-              <span class="param-desc">скорость истощения CTL при высокой нагрузке</span>
+              <span class="param-desc">скорость истощения CTL</span>
             </div>
             <div class="param-item">
               <span class="param-name">q</span>
-              <span class="param-desc">порог истощения иммунитета</span>
+              <span class="param-desc">порог истощения CTL</span>
             </div>
           </div>
         </Accordion>

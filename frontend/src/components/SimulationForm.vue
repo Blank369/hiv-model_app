@@ -9,7 +9,7 @@
       </template>
       <div class="param-group">
         <NumberInput
-            label="T0 (CD4⁺)"
+            label="T0 (CD4+)"
             v-model="localParams.initials.T"
             :step="10"
             :min="0"
@@ -58,7 +58,7 @@
       </template>
       <div class="param-group">
         <NumberInput
-            label="λ (приток CD4⁺)"
+            label="λ (приток CD4+)"
             v-model="localParams.biological.lambda"
             :step="1"
             :min="0"
@@ -86,7 +86,7 @@
         />
 
         <NumberInput
-            label="d_T (гибель CD4⁺)"
+            label="d_T (гибель CD4+)"
             v-model="localParams.biological.d_T"
             :step="0.001"
             :min="0"
@@ -132,7 +132,7 @@
         />
 
         <NumberInput
-            label="δ_I (гибель прод.)"
+            label="δ_I (гибель продуктивных)"
             v-model="localParams.biological.delta_I"
             :step="0.1"
             :min="0"
@@ -141,7 +141,7 @@
         />
 
         <NumberInput
-            label="κ (уничт. CTL)"
+            label="κ (уничтожение CTL)"
             v-model="localParams.biological.kappa"
             :step="0.01"
             :min="0"
@@ -175,7 +175,7 @@
         />
 
         <NumberInput
-            label="φ (нейтрализ. CTL)"
+            label="φ (нейтрализация CTL)"
             v-model="localParams.virus.phi"
             :step="0.001"
             :min="0"

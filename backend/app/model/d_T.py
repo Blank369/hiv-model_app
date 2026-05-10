@@ -1,5 +1,5 @@
 class d_T :
-    """Description of the target cell population (healthy CD4⁺-T lymphocytes)."""
+    """Description of the target cell population (healthy CD4+-T lymphocytes)."""
 
     def __init__(self, lambda_, r, T_max, d_T, beta) :
         self.lambda_ = lambda_
