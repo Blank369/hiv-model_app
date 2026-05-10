@@ -39,11 +39,10 @@ def create_bio_params(bio: dict, virus: dict, immune: dict) -> dict:
 
 def create_diff_eq_classes(bio_params: dict):
     dT = d_T(bio_params['lambda'], bio_params['r'], bio_params['T_max'], bio_params['d_T'], bio_params['beta'])
-    dL = d_L(bio_params['rho'], bio_params['a'], bio_params['delta_L'], bio_params['beta'])
-    dI = d_I(bio_params['delta_I'], bio_params['kappa'], bio_params['a'], bio_params['rho'], bio_params['beta'])
+    dL = d_L(bio_params['rho'], bio_params['beta'], bio_params['a'], bio_params['delta_L'])
+    dI = d_I(bio_params['rho'], bio_params['beta'], bio_params['a'], bio_params['delta_I'], bio_params['kappa'])
     dV = d_V(bio_params['p'], bio_params['c'], bio_params['phi'])
-    dC = d_C(bio_params['s_C'], bio_params['alpha'], bio_params['h'], bio_params['d_C'], bio_params['eta_C'],
-             bio_params['q'])
+    dC = d_C(bio_params['s_C'], bio_params['alpha'], bio_params['h'], bio_params['d_C'], bio_params['eta_C'], bio_params['q'])
     return dT, dL, dI, dV, dC
 
 def create_epsilon(therapy: dict):
@@ -70,4 +69,14 @@ def format_response(t, result):
         "I": result[:, 2].tolist(),
         "V": result[:, 3].tolist(),
         "C": result[:, 4].tolist()
+    }
+
+def create_params_dict(initials: dict, bio: dict, virus: dict, immune: dict, therapy: dict, sim: dict) -> dict:
+    return {
+        "initials": initials,
+        "biological": bio,
+        "virus": virus,
+        "immune": immune,
+        "therapy": therapy,
+        "sim": sim
     }
