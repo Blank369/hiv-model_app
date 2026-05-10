@@ -27,7 +27,7 @@
             </div>
             <div class="param-item">
               <span class="param-name">T_max</span>
-              <span class="param-desc">максимальная ёмкость популяции CD4⁺</span>
+              <span class="param-desc">максимальная емкость популяции CD4⁺</span>
             </div>
             <div class="param-item">
               <span class="param-name">d_T</span>
@@ -54,7 +54,7 @@
           <div class="params-grid">
             <div class="param-item">
               <span class="param-name">ρ</span>
-              <span class="param-desc">доля заражённых клеток, идущих в латентный резервуар</span>
+              <span class="param-desc">доля зараженных клеток, идущих в латентный резервуар</span>
             </div>
             <div class="param-item">
               <span class="param-name">a</span>
@@ -174,15 +174,15 @@
           </div>
           <div class="mode">
             <span class="mode-badge">THERAPY</span>
-            <span>Включение на n-ый день</span>
+            <span>Включение приема препаратов на n-ый день</span>
           </div>
           <div class="mode">
             <span class="mode-badge">INTERRUPTION</span>
-            <span>Приём с периодичностью γ</span>
+            <span>Прием препаратов с периодичностью γ (сут)</span>
           </div>
           <div class="mode">
             <span class="mode-badge">RESISTANCE</span>
-            <span>Развитие резистентности</span>
+            <span>Развитие резистентности (устойчивости) к препарату</span>
           </div>
         </div>
       </Accordion>

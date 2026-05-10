@@ -22,7 +22,7 @@ const props = defineProps({
 
   text: {
     type: String,
-    default: 'Выполняется расчёт...'
+    default: 'Выполняется расчет...'
   },
 
   max: {
@@ -33,13 +33,12 @@ const props = defineProps({
   showText: {
     type: Boolean,
     default: true
-  }
+  },
 })
 
 const progress = ref(0)
 
 let interval = null
-
 
 function startProgress() {
   progress.value = 10
@@ -48,7 +47,7 @@ function startProgress() {
     if (progress.value < 90) {
       progress.value += 5
     }
-  }, 20)
+  }, 1000)
 }
 
 function stopProgress() {
@@ -84,7 +83,7 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  margin-bottom: 1rem;
+  margin: 1rem 0.3rem;
 }
 
 .progress-bar {

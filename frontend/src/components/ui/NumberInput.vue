@@ -91,6 +91,10 @@ input:focus {
   border-color: var(--color-primary);
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
 }
+input:disabled {
+  background-color: var(--bg-disabled);
+  cursor: no-drop;
+}
 .unit {
   font-size: 0.8rem;
   color: var(--text-secondary);

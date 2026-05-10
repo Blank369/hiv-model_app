@@ -70,7 +70,7 @@
         />
 
         <NumberInput
-            label="T_max (ёмкость)"
+            label="T_max (емкость)"
             v-model="localParams.biological.T_max"
             :step="100"
             :min="0"
@@ -226,25 +226,22 @@
             :options="therapyOptions"
         />
         <NumberInput
-            label="День начала терапии"
-            v-model="localParams.therapy.startday_inf"
-            :step="1"
-            :min="0"
-            unit="день"
-        />
-        <NumberInput
             label="ε0_inf"
             v-model="localParams.therapy.epsilon0_inf"
             :step="0.05"
             :min="0"
             :max="1"
+            :disabled="localParams.therapy.mode_inf === 'WITHOUT'"
         />
         <NumberInput
-            label="γ_inf"
+            :label="gammaInf_label"
             v-model="localParams.therapy.gamma_inf"
-            :step="0.001"
+            :step="gammaInf_step"
             :min="0"
+            :disabled="localParams.therapy.mode_inf === 'WITHOUT'"
         />
+
+        <hr/>
 
         <SelectInput
             label="Режим ε_prod"
@@ -252,24 +249,19 @@
             :options="therapyOptions"
         />
         <NumberInput
-            label="День начала терапии"
-            v-model="localParams.therapy.startday_prod"
-            :step="1"
-            :min="0"
-            unit="день"
-        />
-        <NumberInput
             label="ε0_prod"
             v-model="localParams.therapy.epsilon0_prod"
             :step="0.05"
             :min="0"
             :max="1"
+            :disabled="localParams.therapy.mode_prod === 'WITHOUT'"
         />
         <NumberInput
-            label="γ_prod"
+            :label="gammaProd_label"
             v-model="localParams.therapy.gamma_prod"
-            :step="0.001"
+            :step="gammaProd_step"
             :min="0"
+            :disabled="localParams.therapy.mode_prod === 'WITHOUT'"
         />
       </div>
     </Accordion>
@@ -288,19 +280,38 @@
         <SliderInput
             label="Количество точек"
             v-model="localParams.sim.num_points"
-            :min="100"
-            :max="2000"
+            :min="1000"
+            :max="1000000"
             ::step="100"
         />
       </div>
     </Accordion>
 
-    <SubmitButton @click="simulationRun" :disabled="isDisabled">
+    <Button
+        type="submit"
+        @click="simulationRun"
+        :disabled="isDisabled"
+        custom-class="submit__btn"
+    >
       <template #icon>
         <IconLaboratory/>
       </template>
       ЗАПУСТИТЬ
-    </SubmitButton>
+    </Button>
+
+    <ProgressBar :loading="loading"/>
+
+    <Button
+        v-if="loading"
+        type="button"
+        @click="simulationAbort"
+        custom-class="abort__btn"
+    >
+      <template #icon>
+        <IconStop/>
+      </template>
+      Остановить расчет
+    </Button>
   </Panel>
 </template>
 
@@ -315,11 +326,15 @@ import IconGear from "@/components/icons/IconGear.vue";
 import IconLaboratory from "@/components/icons/IconLaboratory.vue";
 
 import Accordion from "@/components/ui/Accordion.vue";
-import SubmitButton from "@/components/ui/SubmitButton.vue";
+import Button from "@/components/ui/Button.vue";
 import SliderInput from "@/components/ui/SliderInput.vue";
 import NumberInput from "@/components/ui/NumberInput.vue";
 import SelectInput from "@/components/ui/SelectInput.vue";
 import Panel from "@/components/ui/Panel.vue";
+import IconStop from "@/components/icons/IconStop.vue";
+
+import { getGammaLabel, getGammaStep } from '@/utils/gammaHelpers'
+import ProgressBar from "@/components/ui/ProgressBar.vue";
 
 const props = defineProps({
   loading: Boolean
@@ -330,32 +345,42 @@ const isDisabled = computed(() => {
 })
 
 const defaultParams = reactive({
-  initials: { T: 1000, L: 0, I: 0.1, V: 100, C: 50 },
+  initials: { T: 1000, L: 0, I: 0, V: 1000, C: 500 },
   biological: {
-    lambda: 10, r: 0.1, T_max: 1250, d_T: 0.005, beta: 5e-7,
-    rho: 0.05, a: 0.005, delta_L: 0.005, delta_I: 0.65, kappa: 5e-5
+    lambda: 10, r: 0.1, T_max: 1600, d_T: 0.005, beta: 0.00001,
+    rho: 0.00001, a: 0.001, delta_L: 0.001, delta_I: 0.5, kappa: 0.00001
   },
-  virus: { p: 525, c: 3, phi: 5e-5 },
-  immune: { s_C: 1.05, alpha: 5, h: 25, d_C: 0.125, eta_C: 0.05, q: 25 },
+  virus: { p: 500, c: 3, phi: 0.00001 },
+  immune: { s_C: 2, alpha: 10, h: 50, d_C: 0.1, eta_C: 0.01, q: 50 },
   therapy: {
-    mode_inf: 'WITHOUT', epsilon0_inf: 0.9, gamma_inf: 0.01, startday_inf: 50,
-    mode_prod: 'WITHOUT', epsilon0_prod: 0.8, gamma_prod: 0.01, startday_prod: 50
+    mode_inf: 'WITHOUT', epsilon0_inf: 0.9, gamma_inf: 0.01,
+    mode_prod: 'WITHOUT', epsilon0_prod: 0.8, gamma_prod: 0.01
   },
-  sim: { t_max: 500, num_points: 500 }
+  sim: { t_max: 350, num_points: 350000 }
 })
 const localParams = reactive(defaultParams)
 
 const therapyOptions = [
   { value: 'WITHOUT', label: 'Без терапии' },
   { value: 'THERAPY', label: 'Включение на n-ый день' },
-  { value: 'INTERRUPTION', label: 'Приём с периодичностью γ' },
-  { value: 'RESISTANCE ', label: 'Развитие резистентности' }
+  { value: 'INTERRUPTION', label: 'Прием с периодичностью γ' },
+  { value: 'RESISTANCE', label: 'Развитие резистентности' }
 ]
 
-const emit = defineEmits(['run'])
+const emit = defineEmits(['run', 'abort'])
 
 function simulationRun() {
   emit('run', localParams)
 }
+
+function simulationAbort() {
+  emit('abort')
+}
+
+const gammaInf_label = computed(() => getGammaLabel(localParams.therapy.mode_inf))
+const gammaInf_step = computed(() => getGammaStep(localParams.therapy.mode_inf))
+
+const gammaProd_label = computed(() => getGammaLabel(localParams.therapy.mode_prod))
+const gammaProd_step = computed(() => getGammaStep(localParams.therapy.mode_prod))
 
 </script>

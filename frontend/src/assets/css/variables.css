@@ -15,6 +15,7 @@
     --bg-sidebar: #eef3f8;
     --bg-hover: #e6edf5;
     --bg-surface: #F0F8FFFF;
+    --bg-disabled: #cacaca;
 
     /* Текст */
     --text-primary: #102132;
@@ -24,7 +25,8 @@
     /* Акценты */
     --accent-success: #27ae60;
     --accent-warning: #f39c12;
-    --accent-danger: #d64541;
+    --accent-danger: #ff8d87;
+    --accent-danger-hover: #a65853;
     --accent-info: #3498db;
 
     /* Границы */

@@ -2,14 +2,14 @@
   <div class="app-container">
 
     <aside class="sidebar">
-      <SimulationForm @run="handleRun" :loading="loading"/>
+      <SimulationForm @run="handleRun" @abort="handleAbort" :loading="loading"/>
     </aside>
 
     <main class="content">
-      <ModelDescription :is-results-ready="isReady"/>
+      <ModelDescription
+          :is-results-ready="isReady"
+      />
       <hr />
-      <ProgressBar :loading="loading" />
-
       <ResultsDisplay
           :results="results"
           :is-results-ready="isReady"
@@ -55,6 +55,12 @@ async function handleRun(formParams) {
   }
 
   loading.value = false
+}
+
+function handleAbort() {
+  simulationService.abort()
+  loading.value = false
+  error.value = 'Расчет прерван пользователем'
 }
 </script>
 
