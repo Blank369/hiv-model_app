@@ -9,17 +9,21 @@ from .init_simulation_helpers import (
     format_response
 )
 from .solve_model import solve_model
+from ..utils import write_table
 
 def run_simulation(request_data: dict) -> dict:
     initials, bio, virus, immune, therapy, sim = parse_request(request_data)
 
     initial_conditions = create_initial_conditions(initials)
     bio_params = create_bio_params(bio, virus, immune)
-    dT, dL, dI, dV, dC = create_diff_eq_classes(bio_params)
+    equations = create_diff_eq_classes(bio_params)
     epsilon = create_epsilon(therapy)
     time_params = create_time_params(sim)
+
     params_dict = create_params_dict(initials, bio, virus, immune, therapy, sim)
 
-    t, result = solve_model(initial_conditions, time_params, dT, dL, dI, dV, dC, epsilon, params_dict)
+    simulation = solve_model(initial_conditions, time_params, equations, epsilon)
 
-    return format_response(t, result)
+    write_table("result", simulation, params_dict)
+
+    return format_response(simulation)

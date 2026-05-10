@@ -281,7 +281,7 @@
             label="Количество точек"
             v-model="localParams.sim.num_points"
             :min="1000"
-            :max="1000000"
+            :max="100000"
             ::step="100"
         />
       </div>
@@ -356,7 +356,7 @@ const defaultParams = reactive({
     mode_inf: 'WITHOUT', epsilon0_inf: 0.9, gamma_inf: 0.01,
     mode_prod: 'WITHOUT', epsilon0_prod: 0.8, gamma_prod: 0.01
   },
-  sim: { t_max: 350, num_points: 350000 }
+  sim: { t_max: 350, num_points: 3500 }
 })
 const localParams = reactive(defaultParams)
 

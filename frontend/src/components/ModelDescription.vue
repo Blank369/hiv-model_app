@@ -174,7 +174,7 @@
           </div>
           <div class="mode">
             <span class="mode-badge">THERAPY</span>
-            <span>Включение приема препаратов на n-ый день</span>
+            <span>Включение приема препаратов на γ-ый день</span>
           </div>
           <div class="mode">
             <span class="mode-badge">INTERRUPTION</span>
@@ -182,7 +182,7 @@
           </div>
           <div class="mode">
             <span class="mode-badge">RESISTANCE</span>
-            <span>Развитие резистентности (устойчивости) к препарату</span>
+            <span>Развитие резистентности (устойчивости) к препарату со скоростью γ</span>
           </div>
         </div>
       </Accordion>

@@ -11,34 +11,28 @@
       <div class="plots-grid">
         <div class="single-plot">
           <h4>CD4⁺-лимфоциты (T)</h4>
-          <LineChart :data="TChart" :options="simpleOptions" />
+          <LineChart :data="TChart" :options="cellChartOptions" />
         </div>
         <div class="single-plot">
           <h4>Вирусная нагрузка (V)</h4>
-          <LineChart :data="VChart" :options="simpleOptions" />
+          <LineChart :data="VChart" :options="virusChartOptions" />
         </div>
         <div class="single-plot">
           <h4>Латентный резервуар (L)</h4>
-          <LineChart :data="LChart" :options="simpleOptions" />
+          <LineChart :data="LChart" :options="cellChartOptions" />
         </div>
         <div class="single-plot">
           <h4>Продуктивные клетки (I)</h4>
-          <LineChart :data="IChart" :options="simpleOptions" />
+          <LineChart :data="IChart" :options="cellChartOptions" />
         </div>
         <div class="single-plot">
           <h4>Эффекторные клетки (C)</h4>
-          <LineChart :data="CChart" :options="simpleOptions" />
+          <LineChart :data="CChart" :options="cellChartOptions" />
         </div>
-      </div>
-    </Accordion>
-
-    <Accordion
-        v-if="hasTherapy"
-        title="Эффективность терапии"
-        :isOpen="false"
-    >
-      <div class="plot-container">
-        <LineChart :data="EChart" :options="therapyOptions" />
+        <div v-if="hasTherapy" class="single-plot">
+          <h4>Эффективность терапии</h4>
+          <LineChart :data="EChart" :options="therapyChartOptions" />
+        </div>
       </div>
     </Accordion>
 
@@ -68,17 +62,20 @@ import LineChart from "@/components/ui/LineChart.vue";
 import Panel from "@/components/ui/Panel.vue";
 import IconGraph from "@/components/icons/IconGraph.vue";
 import IconChart from "@/components/icons/IconChart.vue";
-import { chartColors } from '@/assets/css/chartColors.js'
 import Button from "@/components/ui/Button.vue";
 import IconTxt from "@/components/icons/IconTxt.vue";
+import {
+  cellChartOptions,
+  virusChartOptions,
+  therapyChartOptions,
+  chartColors,
+  createChartData
+} from '@/utils/chartHelpers'
 import IconDownload from "@/components/icons/IconDownload.vue";
+
 
 const props = defineProps({
   results: {
-    type: Object,
-    default: null
-  },
-  therapyEps: {
     type: Object,
     default: null
   },
@@ -95,74 +92,27 @@ const isOpen = computed(() => {
 })
 
 const hasTherapy = computed(() => {
-  return props.therapyEps && props.therapyEps.eps_inf?.some(v => v > 0)
+  if (!props.results) return false
+  const epsInf = props.results.eps_inf
+  const epsProd = props.results.eps_prod
+  return (epsInf && epsInf.some(v => v > 0)) || (epsProd && epsProd.some(v => v > 0))
 })
 
-const TChart = computed(() => ({
-  labels: props.results?.t || [],
-  datasets: [{
-    label: 'CD4⁺ (кл/мкл)',
-    data: props.results?.T || [],
-    borderColor: chartColors.T,
-    backgroundColor: 'transparent',
-    fill: true,
-    tension: 0.3
-  }]
-}))
-
-const LChart = computed(() => ({
-  labels: props.results?.t || [],
-  datasets: [{
-    label: 'Латентные (кл/мкл)',
-    data: props.results?.L || [],
-    borderColor: chartColors.L,
-    backgroundColor: 'transparent',
-    tension: 0.3
-  }]
-}))
-
-const IChart = computed(() => ({
-  labels: props.results?.t || [],
-  datasets: [{
-    label: 'Продуктивные (кл/мкл)',
-    data: props.results?.I || [],
-    borderColor: chartColors.I,
-    backgroundColor: 'transparent',
-    tension: 0.3
-  }]
-}))
-
-const VChart = computed(() => ({
-  labels: props.results?.t || [],
-  datasets: [{
-    label: 'Вирус (копий/мл)',
-    data: props.results?.V || [],
-    borderColor: chartColors.V,
-    backgroundColor: 'transparent',
-    tension: 0.3
-  }]
-}))
-
-const CChart = computed(() => ({
-  labels: props.results?.t || [],
-  datasets: [{
-    label: 'CTL (кл/мкл)',
-    data: props.results?.C || [],
-    borderColor: chartColors.C,
-    backgroundColor: 'transparent',
-    tension: 0.3
-  }]
-}))
+const TChart = computed(() => createChartData(props.results?.t, props.results?.T, 'CD4⁺ (кл/мкл)', chartColors.T, { fill: true }))
+const LChart = computed(() => createChartData(props.results?.t, props.results?.L, 'Латентные (кл/мкл)', chartColors.L))
+const IChart = computed(() => createChartData(props.results?.t, props.results?.I, 'Продуктивные (кл/мкл)', chartColors.I))
+const VChart = computed(() => createChartData(props.results?.t, props.results?.V, 'Вирус (копий/мл)', chartColors.V))
+const CChart = computed(() => createChartData(props.results?.t, props.results?.C, 'CTL (кл/мкл)', chartColors.C))
 
 const EChart = computed(() => {
-  if (!props.therapyEps || !props.results) return { labels: [], datasets: [] }
+  if (!props.results) return { labels: [], datasets: [] }
 
   return {
     labels: props.results.t,
     datasets: [
       {
         label: 'ε_inf',
-        data: props.therapyEps.eps_inf,
+        data: props.results.eps_inf || [],
         borderColor: chartColors.eps_inf,
         backgroundColor: 'transparent',
         tension: 0.3,
@@ -170,7 +120,7 @@ const EChart = computed(() => {
       },
       {
         label: 'ε_prod',
-        data: props.therapyEps.eps_prod,
+        data: props.results.eps_prod || [],
         borderColor: chartColors.eps_prod,
         backgroundColor: 'transparent',
         tension: 0.3,
@@ -180,48 +130,10 @@ const EChart = computed(() => {
   }
 })
 
-// Настройки графиков
-const chartOptions = {
-  responsive: true,
-  maintainAspectRatio: true,
-  interaction: { mode: 'index', intersect: false },
-  plugins: {
-    legend: { position: 'top' },
-    tooltip: { mode: 'index', intersect: false }
-  }
-}
 
-const simpleOptions = {
-  responsive: true,
-  maintainAspectRatio: true,
-  plugins: {
-    legend: { position: 'top' }
-  }
-}
-
-const therapyOptions = {
-  responsive: true,
-  maintainAspectRatio: true,
-  scales: {
-    y: { min: 0, max: 1, title: { display: true, text: 'Эффективность ε' } }
-  }
-}
 </script>
 
 <style scoped>
-.results-card {
-  background: var(--bg-surface);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-color);
-  overflow: hidden;
-}
-
-.card-header {
-  padding: 16px 20px;
-  background: var(--bg-hover);
-  border-bottom: 1px solid var(--border-color);
-}
-
 .card-header h2 {
   margin: 0;
   font-size: 1.25rem;

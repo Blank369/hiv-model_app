@@ -61,14 +61,18 @@ def create_time_params(sim: dict):
     tau = t_max / num_points
     return TimeParams(tau=tau, dpi_max=t_max)
 
-def format_response(t, result):
+def format_response(simulation):
+    result = simulation["result"]
+
     return {
-        "t": t.tolist(),
+        "t": simulation["t"].tolist(),
         "T": result[:, 0].tolist(),
         "L": result[:, 1].tolist(),
         "I": result[:, 2].tolist(),
         "V": result[:, 3].tolist(),
-        "C": result[:, 4].tolist()
+        "C": result[:, 4].tolist(),
+        "eps_inf": simulation["eps_inf"],
+        "eps_prod": simulation["eps_prod"]
     }
 
 def create_params_dict(initials: dict, bio: dict, virus: dict, immune: dict, therapy: dict, sim: dict) -> dict:

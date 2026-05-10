@@ -1,17 +1,47 @@
 import numpy as np
 from scipy.integrate import odeint
 
+from .calculate_epsilon import calculate_epsilon
 from .system_odes import system_odes
-from ..utils import write_table
 
-def solve_model(initials, time_params, d_t, d_l, d_i, d_v, d_c, epsilon, params_dict: dict = None):
-    t = np.linspace(0.0, time_params.dpi_max, int(time_params.dpi_max / time_params.tau))
+
+def solve_model(initials, time_params, equations, epsilon):
+    t = np.linspace(
+        0.0,
+        time_params.dpi_max,
+        int(time_params.dpi_max / time_params.tau)
+    )
+
     result = odeint(
         system_odes,
         initials.getInits(),
         t,
-        args=(d_t, d_l, d_i, d_v, d_c, epsilon)
+        args=(*equations, epsilon)
     )
 
-    write_table('result', result, t, params_dict)
-    return t, result
+    eps_inf = [
+        calculate_epsilon(
+            epsilon.epsilon0_inf,
+            epsilon.mode_inf,
+            epsilon.gamma_inf,
+            ti
+        )
+        for ti in t
+    ]
+
+    eps_prod = [
+        calculate_epsilon(
+            epsilon.epsilon0_prod,
+            epsilon.mode_prod,
+            epsilon.gamma_prod,
+            ti
+        )
+        for ti in t
+    ]
+
+    return {
+        "t": t,
+        "result": result,
+        "eps_inf": eps_inf,
+        "eps_prod": eps_prod
+    }
