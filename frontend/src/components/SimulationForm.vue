@@ -15,6 +15,7 @@
             :min="0"
             :max="2000"
             unit="кл/мкл"
+            required
         />
         <NumberInput
             label="L0 (латентные)"
@@ -22,6 +23,7 @@
             :step="1"
             :min="0"
             unit="кл/мкл"
+            required
         />
         <NumberInput
             label="I0 (продуктивные)"
@@ -29,6 +31,7 @@
             :step="0.1"
             :min="0"
             unit="кл/мкл"
+            required
         />
         <NumberInput
             label="V0 (вирус)"
@@ -36,6 +39,7 @@
             :step="10"
             :min="0"
             unit="копий/мл"
+            required
         />
         <NumberInput
             label="C0 (CTL)"
@@ -43,6 +47,7 @@
             :step="10"
             :min="0"
             unit="кл/мкл"
+            required
         />
       </div>
     </Accordion>
@@ -58,6 +63,7 @@
             :step="1"
             :min="0"
             clue="5 – 15"
+            required
         />
 
         <NumberInput
@@ -67,6 +73,7 @@
             :min="0"
             :max="1"
             clue="0.05 – 0.2"
+            required
         />
 
         <NumberInput
@@ -75,6 +82,7 @@
             :step="100"
             :min="0"
             clue="500 – 2000"
+            required
         />
 
         <NumberInput
@@ -83,6 +91,7 @@
             :step="0.001"
             :min="0"
             clue="10⁻⁶ – 10⁻²"
+            required
         />
 
         <NumberInput
@@ -91,6 +100,7 @@
             :step="1e-8"
             :min="0"
             clue="10⁻⁸ – 10⁻⁶"
+            required
         />
 
         <NumberInput
@@ -100,6 +110,7 @@
             :min="0"
             :max="1"
             clue="10⁻⁶ – 10⁻¹"
+            required
         />
 
         <NumberInput
@@ -108,6 +119,7 @@
             :step="0.001"
             :min="0"
             clue="10⁻⁴ – 10⁻²"
+            required
         />
 
         <NumberInput
@@ -116,6 +128,7 @@
             :step="0.001"
             :min="0"
             clue="10⁻⁴ – 10⁻²"
+            required
         />
 
         <NumberInput
@@ -124,6 +137,7 @@
             :step="0.1"
             :min="0"
             clue="0.3 – 1.0"
+            required
         />
 
         <NumberInput
@@ -132,6 +146,7 @@
             :step="0.01"
             :min="0"
             clue="10⁻⁶ – 10⁻⁴"
+            required
         />
       </div>
     </Accordion>
@@ -147,6 +162,7 @@
             :step="10"
             :min="0"
             clue="50 – 1000"
+            required
         />
 
         <NumberInput
@@ -155,6 +171,7 @@
             :step="1"
             :min="0"
             clue="1 – 5"
+            required
         />
 
         <NumberInput
@@ -163,6 +180,7 @@
             :step="0.001"
             :min="0"
             clue="10⁻⁶ – 10⁻⁴"
+            required
         />
 
         <NumberInput
@@ -171,6 +189,7 @@
             :step="0.1"
             :min="0"
             clue="0.1 – 2"
+            required
         />
 
         <NumberInput
@@ -179,6 +198,7 @@
             :step="0.01"
             :min="0"
             clue="0.1 – 10"
+            required
         />
 
         <NumberInput
@@ -187,6 +207,7 @@
             :step="50"
             :min="0"
             clue="1 – 50"
+            required
         />
 
         <NumberInput
@@ -195,6 +216,7 @@
             :step="0.01"
             :min="0"
             clue="0.05 – 0.2"
+            required
         />
 
         <NumberInput
@@ -203,6 +225,7 @@
             :step="0.01"
             :min="0"
             clue="10⁻³ – 10⁻¹"
+            required
         />
 
         <NumberInput
@@ -211,6 +234,7 @@
             :step="50"
             :min="0"
             clue="1 – 50"
+            required
         />
       </div>
     </Accordion>
@@ -224,6 +248,7 @@
             label="Режим ε_inf"
             v-model="localParams.therapy.mode_inf"
             :options="therapyOptions"
+            required
         />
         <NumberInput
             label="ε0_inf"
@@ -232,6 +257,7 @@
             :min="0"
             :max="1"
             :disabled="localParams.therapy.mode_inf === 'WITHOUT'"
+            required
         />
         <NumberInput
             :label="gammaInf_label"
@@ -239,6 +265,7 @@
             :step="gammaInf_step"
             :min="0"
             :disabled="localParams.therapy.mode_inf === 'WITHOUT'"
+            required
         />
 
         <hr/>
@@ -247,6 +274,7 @@
             label="Режим ε_prod"
             v-model="localParams.therapy.mode_prod"
             :options="therapyOptions"
+            required
         />
         <NumberInput
             label="ε0_prod"
@@ -255,6 +283,7 @@
             :min="0"
             :max="1"
             :disabled="localParams.therapy.mode_prod === 'WITHOUT'"
+            required
         />
         <NumberInput
             :label="gammaProd_label"
@@ -262,6 +291,7 @@
             :step="gammaProd_step"
             :min="0"
             :disabled="localParams.therapy.mode_prod === 'WITHOUT'"
+            required
         />
       </div>
     </Accordion>
@@ -276,6 +306,7 @@
             v-model="localParams.sim.t_max"
             :step="50"
             :min="1"
+            required
         />
         <SliderInput
             label="Количество точек"
@@ -283,6 +314,7 @@
             :min="1000"
             :max="100000"
             ::step="100"
+            required
         />
       </div>
     </Accordion>
@@ -333,7 +365,7 @@ import SelectInput from "@/components/ui/SelectInput.vue";
 import Panel from "@/components/ui/Panel.vue";
 import IconStop from "@/components/icons/IconStop.vue";
 
-import { getGammaLabel, getGammaStep } from '@/utils/gammaHelpers'
+import {getGammaLabel, getGammaStep} from '@/utils/gammaHelpers'
 import ProgressBar from "@/components/ui/ProgressBar.vue";
 
 const props = defineProps({
@@ -345,26 +377,26 @@ const isDisabled = computed(() => {
 })
 
 const defaultParams = reactive({
-  initials: { T: 1000, L: 0, I: 0, V: 1000, C: 500 },
+  initials: {T: 1000, L: 0, I: 0, V: 1000, C: 500},
   biological: {
     lambda: 10, r: 0.1, T_max: 1600, d_T: 0.005, beta: 0.00001,
     rho: 0.00001, a: 0.001, delta_L: 0.001, delta_I: 0.5, kappa: 0.00001
   },
-  virus: { p: 500, c: 3, phi: 0.00001 },
-  immune: { s_C: 2, alpha: 10, h: 50, d_C: 0.1, eta_C: 0.01, q: 50 },
+  virus: {p: 500, c: 3, phi: 0.00001},
+  immune: {s_C: 2, alpha: 10, h: 50, d_C: 0.1, eta_C: 0.01, q: 50},
   therapy: {
     mode_inf: 'WITHOUT', epsilon0_inf: 0.9, gamma_inf: 0.01,
     mode_prod: 'WITHOUT', epsilon0_prod: 0.8, gamma_prod: 0.01
   },
-  sim: { t_max: 350, num_points: 3500 }
+  sim: {t_max: 350, num_points: 3500}
 })
 const localParams = reactive(defaultParams)
 
 const therapyOptions = [
-  { value: 'WITHOUT', label: 'Без терапии' },
-  { value: 'THERAPY', label: 'Включение на n-ый день' },
-  { value: 'INTERRUPTION', label: 'Прием с периодичностью γ' },
-  { value: 'RESISTANCE', label: 'Развитие резистентности' }
+  {value: 'WITHOUT', label: 'Без терапии'},
+  {value: 'THERAPY', label: 'Включение на n-ый день'},
+  {value: 'INTERRUPTION', label: 'Прием с периодичностью γ'},
+  {value: 'RESISTANCE', label: 'Развитие резистентности'}
 ]
 
 const emit = defineEmits(['run', 'abort'])
