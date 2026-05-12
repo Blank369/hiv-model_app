@@ -18,11 +18,11 @@
           <LineChart :data="VChart" :options="virusChartOptions" />
         </div>
         <div class="single-plot">
-          <h4>Латентный резервуар (L)</h4>
+          <h4>Латентно инфицированные резервуар (L)</h4>
           <LineChart :data="LChart" :options="cellChartOptions" />
         </div>
         <div class="single-plot">
-          <h4>Продуктивные клетки (I)</h4>
+          <h4>Продуктивно инфицированные клетки (I)</h4>
           <LineChart :data="IChart" :options="cellChartOptions" />
         </div>
         <div class="single-plot">

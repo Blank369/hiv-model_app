@@ -16,7 +16,7 @@ export const simulationService = {
             const response = await apiClient.post('/simulate', params, { signal })
             return { success: true, data: response.data }
         } catch (error) {
-            return handleApiError(error, 'Не удалось выполнить расчёт')
+            throw handleApiError(error, 'Не удалось выполнить расчет. Проверьте корректность полей.')
         } finally {
             this.abortController = null
         }
@@ -40,7 +40,7 @@ export const simulationService = {
 
     async downloadResult() {
         try {
-            const response = await apiClient.get('/download-results', {
+            const response = await apiClient.get('/download-result', {
                 responseType: 'blob'
             })
 

@@ -2,7 +2,7 @@
   <div class="app-container">
 
     <aside class="sidebar">
-      <SimulationForm @run="handleRun" @abort="handleAbort" :loading="loading"/>
+      <SimulationForm @run="handleRun" @abort="handleAbort" :loading="loading" :error-message="errorMessage"/>
     </aside>
 
     <main class="content">
@@ -28,12 +28,12 @@ import { simulationService } from '@/services/SimulationService'
 
 const results = ref(null)
 const loading = ref(false)
-const error = ref(null)
+const errorMessage = ref(null)
 const isReady = ref(false)
 
 async function handleRun(formParams) {
   loading.value = true
-  error.value = null
+  errorMessage.value = null
   isReady.value = false
 
   const payload = {
@@ -45,13 +45,12 @@ async function handleRun(formParams) {
     sim: formParams.sim
   }
 
-  const response = await simulationService.simulate(payload)
-
-  if (response.success) {
+  try {
+    const response = await simulationService.simulate(payload)
     results.value = response.data
     isReady.value = true
-  } else {
-    error.value = response.error
+  } catch (error) {
+    errorMessage.value = error.error;
   }
 
   loading.value = false
@@ -60,7 +59,6 @@ async function handleRun(formParams) {
 function handleAbort() {
   simulationService.abort()
   loading.value = false
-  error.value = 'Расчет прерван пользователем'
 }
 
 async function handleDownload() {
@@ -100,4 +98,5 @@ async function handleDownload() {
 hr {
   margin: 1rem 0;
 }
+
 </style>

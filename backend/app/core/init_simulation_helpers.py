@@ -28,7 +28,7 @@ def create_initial_conditions(initials: dict):
 
 def create_bio_params(bio: dict, virus: dict, immune: dict) -> dict:
     return {
-        'lambda': bio['lambda'], 'r': bio['r'], 'T_max': bio['T_max'],
+        'lambda_': bio['lambda_'], 'r': bio['r'], 'T_max': bio['T_max'],
         'd_T': bio['d_T'], 'beta': bio['beta'], 'rho': bio['rho'],
         'a': bio['a'], 'delta_L': bio['delta_L'], 'delta_I': bio['delta_I'],
         'kappa': bio['kappa'],
@@ -38,7 +38,7 @@ def create_bio_params(bio: dict, virus: dict, immune: dict) -> dict:
     }
 
 def create_diff_eq_classes(bio_params: dict):
-    dT = d_T(bio_params['lambda'], bio_params['r'], bio_params['T_max'], bio_params['d_T'], bio_params['beta'])
+    dT = d_T(bio_params['lambda_'], bio_params['r'], bio_params['T_max'], bio_params['d_T'], bio_params['beta'])
     dL = d_L(bio_params['rho'], bio_params['beta'], bio_params['a'], bio_params['delta_L'])
     dI = d_I(bio_params['rho'], bio_params['beta'], bio_params['a'], bio_params['delta_I'], bio_params['kappa'])
     dV = d_V(bio_params['p'], bio_params['c'], bio_params['phi'])

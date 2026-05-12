@@ -312,12 +312,14 @@
             label="Количество точек"
             v-model="localParams.sim.num_points"
             :min="1000"
-            :max="100000"
+            :max="10000"
             ::step="100"
             required
         />
       </div>
     </Accordion>
+
+    <div class="error-message" v-if="errorMessage">{{errorMessage}}</div>
 
     <Button
         type="submit"
@@ -369,7 +371,8 @@ import {getGammaLabel, getGammaStep} from '@/utils/gammaHelpers'
 import ProgressBar from "@/components/ui/ProgressBar.vue";
 
 const props = defineProps({
-  loading: Boolean
+  loading: Boolean,
+  errorMessage: String,
 })
 
 const isDisabled = computed(() => {
@@ -416,3 +419,9 @@ const gammaProd_label = computed(() => getGammaLabel(localParams.therapy.mode_pr
 const gammaProd_step = computed(() => getGammaStep(localParams.therapy.mode_prod))
 
 </script>
+
+<style>
+.error-message{
+  color: var(--accent-danger);
+}
+</style>
