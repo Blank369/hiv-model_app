@@ -46,4 +46,12 @@ docker-compose up -d
    npm run dev
    ```
 
+### Последующий запуск
+```bash
+cd frontend ; npm run dev 
+```
+```bash
+ cd backend;  uvicorn app.api:app --reload --port 8000;
+```
+
 Фронтенд запустится по адресу: http://127.0.0.1:5173 (но лучше проверить порт в консоли, возможно там порт 5174, 5175)
