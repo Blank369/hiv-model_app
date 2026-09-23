@@ -1,42 +1,43 @@
-# Приложение для математического моделирования взаимодействия ВИЧ и иммунной системы человека
+# Application for Mathematical Modeling of HIV and Human Immune System Interaction
 
-## Запуск без Docker
+## Running without Docker
 
-### Запуск backend
+### Running the backend
 
-1. Клонировать проект 
+1. Clone the project
 
-2. ```bash 
+2. ```bash
    cd backend
    ```
-3. Создать виртуальное окружение
+3. Create a virtual environment
 ```bash
     python -m venv venv
    ```
-4. Установка зависимостей
+4. Install dependencies
 ```bash
     pip install -r requirements.txt
    ```
-5. Запуск сервера
+5. Start the server
 ```bash
    uvicorn app.api:app --reload --port 8000
 ```
 
-### Запуск frontend
+### Running the frontend
 
 1. ```bash
    cd frontend
 
-2. Установка зависимостей
+2. Install dependencies
     ```bash
-    npm install
+   cd frontend
+   npm install
     ```
-3. Запуск дев-сервера
+3. Start the dev server
     ```bash
    npm run dev
    ```
 
-### Последующий запуск
+### Subsequent launches
 ```bash
 cd frontend ; npm run dev 
 ```
@@ -44,4 +45,4 @@ cd frontend ; npm run dev
  cd backend;  uvicorn app.api:app --reload --port 8000;
 ```
 
-Фронтенд запустится по адресу: http://127.0.0.1:5173 (но лучше проверить порт в консоли, возможно там порт 5174, 5175)
+The frontend will start at: http://127.0.0.1:5173 (but it's better to check the port in the console, it might be 5174, 5175)

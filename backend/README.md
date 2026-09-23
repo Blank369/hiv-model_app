@@ -1,12 +1,12 @@
 # backend
 
-Работа осуществляется из директории /backend/
+All commands are run from the `/backend/` directory.
 
 ```bash
 cd /backend/
 ```
 
-## Запуск тестов 
+## Running tests
 
 ```bash
 python -m pytest tests/ -v

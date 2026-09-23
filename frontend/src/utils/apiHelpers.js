@@ -5,7 +5,7 @@ export function createAbortController() {
 
 export function handleApiError(error, defaultMessage) {
     if (error.name === 'AbortError' || error.code === 'ERR_CANCELED') {
-        return { success: false, error: 'Операция прервана', aborted: true }
+        return { success: false, error: 'Operation interrupted', aborted: true }
     }
     console.error(error)
     return { success: false, error: defaultMessage }

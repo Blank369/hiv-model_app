@@ -16,7 +16,7 @@ export const simulationService = {
             const response = await apiClient.post('/simulate', params, { signal })
             return { success: true, data: response.data }
         } catch (error) {
-            throw handleApiError(error, 'Не удалось выполнить расчет. Проверьте корректность полей.')
+            throw handleApiError(error, 'Simulation failed. Please verify that all fields are correct.')
         } finally {
             this.abortController = null
         }
@@ -34,7 +34,7 @@ export const simulationService = {
             const response = await apiClient.get('/check')
             return { success: true, data: response.data }
         } catch (error) {
-            return handleApiError(error, 'Сервер недоступен')
+            return handleApiError(error, 'Server unavailable')
         }
     },
 
@@ -49,7 +49,7 @@ export const simulationService = {
 
             return { success: true }
         } catch (error) {
-            return handleApiError(error, 'Не удалось скачать файл')
+            return handleApiError(error, 'Failed to download file')
         }
     }
 }

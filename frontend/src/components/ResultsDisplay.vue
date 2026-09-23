@@ -1,42 +1,42 @@
 <template>
-  <Panel title="Результаты моделирования">
+  <Panel title="Simulation Results">
     <template #icon>
       <IconGraph/>
     </template>
 
-    <Accordion title="Графики переменных" :isOpen="isOpen">
+    <Accordion title="Variable Plots" :isOpen="isOpen">
       <template #icon>
         <IconChart/>
       </template>
       <div class="plots-grid">
         <div class="single-plot">
-          <h4>CD4+-лимфоциты (T)</h4>
+          <h4>Uninfected CD4+ T cells (T)</h4>
           <LineChart :data="TChart" :options="cellChartOptions" />
         </div>
         <div class="single-plot">
-          <h4>Вирусная нагрузка (V)</h4>
+          <h4>Free HIV virions (V)</h4>
           <LineChart :data="VChart" :options="virusChartOptions" />
         </div>
         <div class="single-plot">
-          <h4>Латентно инфицированные резервуар (L)</h4>
+          <h4>Latently infected  CD4+ T cells (L)</h4>
           <LineChart :data="LChart" :options="cellChartOptions" />
         </div>
         <div class="single-plot">
-          <h4>Продуктивно инфицированные клетки (I)</h4>
+          <h4>Productively infected  CD4+ T cells (I)</h4>
           <LineChart :data="IChart" :options="cellChartOptions" />
         </div>
         <div class="single-plot">
-          <h4>Эффекторные клетки (C)</h4>
+          <h4>Effector immune cells (C)</h4>
           <LineChart :data="CChart" :options="cellChartOptions" />
         </div>
         <div class="single-plot">
-          <h4>Эффективность терапии</h4>
+          <h4>Therapy efficacy</h4>
           <LineChart :data="EChart" :options="therapyChartOptions" />
         </div>
       </div>
     </Accordion>
 
-    <Accordion title="Скачать результаты">
+    <Accordion title="Download Results">
       <template #icon>
         <IconDownload/>
       </template>
@@ -49,7 +49,7 @@
         <template #icon>
           <IconTxt/>
         </template>
-        Скачать в .txt
+        Download as .txt
       </Button>
     </Accordion>
   </Panel>
@@ -91,11 +91,11 @@ const isOpen = computed(() => {
   return props.results && props.isResultsReady
 })
 
-const TChart = computed(() => createChartData(props.results?.t, props.results?.T, 'CD4+ (кл/мкл)', chartColors.T, { fill: true }))
-const LChart = computed(() => createChartData(props.results?.t, props.results?.L, 'Латентные (кл/мкл)', chartColors.L))
-const IChart = computed(() => createChartData(props.results?.t, props.results?.I, 'Продуктивные (кл/мкл)', chartColors.I))
-const VChart = computed(() => createChartData(props.results?.t, props.results?.V, 'Вирус (копий/мл)', chartColors.V))
-const CChart = computed(() => createChartData(props.results?.t, props.results?.C, 'CTL (кл/мкл)', chartColors.C))
+const TChart = computed(() => createChartData(props.results?.t, props.results?.T, 'CD4+ (cells/µL)', chartColors.T, { fill: true }))
+const LChart = computed(() => createChartData(props.results?.t, props.results?.L, 'Latent (cells/µL)', chartColors.L))
+const IChart = computed(() => createChartData(props.results?.t, props.results?.I, 'Productive (cells/µL)', chartColors.I))
+const VChart = computed(() => createChartData(props.results?.t, props.results?.V, 'Virus (copies/mL)', chartColors.V))
+const CChart = computed(() => createChartData(props.results?.t, props.results?.C, 'CTL (cells/µL)', chartColors.C))
 
 const EChart = computed(() => {
   if (!props.results) return { labels: [], datasets: [] }

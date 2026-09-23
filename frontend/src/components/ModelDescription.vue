@@ -1,10 +1,10 @@
 <template>
-  <Panel title="Математическая модель взаимодействия ВИЧ и иммунной системы человека">
-  <template #icon>
-    <IconQuestion/>
-  </template>
+  <Panel title="Mathematical Model HIV–immune system interaction">
+    <template #icon>
+      <IconQuestion/>
+    </template>
     <div class="card-body">
-      <Accordion title="Уравнения модели" :isOpen="isOpen">
+      <Accordion title="Model Equations" :isOpen="isOpen">
         <template #icon>
           <IconBook/>
         </template>
@@ -15,31 +15,31 @@
               dT/dt = λ + r·T·(1 - (T+I+L)/T<sub>max</sub>) - d<sub>T</sub>·T - (1-ε<sub>inf</sub>(t))·β·V·T
             </code>
           </template>
-          <div class="description">динамика здоровых CD4+-лимфоцитов</div>
+          <div class="description">dynamics of uninfected CD4+ T cells</div>
           <div class="params-grid">
             <div class="param-item">
               <span class="param-name">λ</span>
-              <span class="param-desc">естественный приток CD4+-клеток из тимуса</span>
+              <span class="param-desc">natural influx of CD4+ cells from the thymus</span>
             </div>
             <div class="param-item">
               <span class="param-name">r</span>
-              <span class="param-desc">скорость пролиферации CD4+-клеток</span>
+              <span class="param-desc">rate of homeostatic proliferation of CD4+ T cells</span>
             </div>
             <div class="param-item">
               <span class="param-name">T_max</span>
-              <span class="param-desc">предельная емкость CD4+-клеток</span>
+              <span class="param-desc">effective carrying capacity of the CD4+ T-cell population</span>
             </div>
             <div class="param-item">
               <span class="param-name">d_T</span>
-              <span class="param-desc">скорость естественной гибели CD4+-клеток</span>
+              <span class="param-desc">natural death rate of CD4+ cells</span>
             </div>
             <div class="param-item">
               <span class="param-name">β</span>
-              <span class="param-desc">скорость инфицирования CD4+-клеток вирусом</span>
+              <span class="param-desc">infection rate coefficient for CD4+ T cells by free virions</span>
             </div>
             <div class="param-item">
               <span class="param-name">ε_inf</span>
-              <span class="param-desc">эффективность ингибиторов заражения (АРТ)</span>
+              <span class="param-desc"><a class="anchor" href="#einf">efficacy of infection inhibitors (ART)</a></span>
             </div>
           </div>
         </Accordion>
@@ -50,19 +50,19 @@
               dL/dt = ρ·(1-ε<sub>inf</sub>(t))·β·V·T - a·L - δ<sub>L</sub>·L
             </code>
           </template>
-          <div class="description">динамика латентно инфицированных клеток</div>
+          <div class="description">dynamics of latently infected CD4+ T cells</div>
           <div class="params-grid">
             <div class="param-item">
               <span class="param-name">ρ</span>
-              <span class="param-desc">доля латентно инфицированных CD4+-клеток</span>
+              <span class="param-desc">fraction of newly infected cells entering the latent state</span>
             </div>
             <div class="param-item">
               <span class="param-name">a</span>
-              <span class="param-desc">скорость реактивации латентных клеток</span>
+              <span class="param-desc">reactivation rate of latently infected cells</span>
             </div>
             <div class="param-item">
               <span class="param-name">δ_L</span>
-              <span class="param-desc">скорость гибели латентных клеток</span>
+              <span class="param-desc">natural death rate of latently infected cells </span>
             </div>
           </div>
         </Accordion>
@@ -73,19 +73,15 @@
               dI/dt = (1-ρ)·(1-ε<sub>inf</sub>(t))·β·V·T + a·L - δ<sub>I</sub>·I - κ·C·I
             </code>
           </template>
-          <div class="description">динамика продуктивно инфицированных клеток</div>
+          <div class="description">dynamics of productively infected CD4+ T cells</div>
           <div class="params-grid">
             <div class="param-item">
               <span class="param-name">δ_I</span>
-              <span class="param-desc">скорость гибели продуктивно инфицированных клеток</span>
+              <span class="param-desc">natural death rate of productively infected cells</span>
             </div>
             <div class="param-item">
               <span class="param-name">κ</span>
-              <span class="param-desc">скорость уничтожения инфицированных клеток CTL</span>
-            </div>
-            <div class="param-item">
-              <span class="param-name">c</span>
-              <span class="param-desc">концентрация эффекторных CTL-клеток</span>
+              <span class="param-desc">coefficient of cytotoxic killing of productively infected cells</span>
             </div>
           </div>
         </Accordion>
@@ -96,23 +92,23 @@
               dV/dt = (1-ε<sub>prod</sub>(t))·p·I - c·V - φ·C·V
             </code>
           </template>
-          <div class="description">динамика свободных вирусных частиц</div>
+          <div class="description">dynamics of free HIV virions</div>
           <div class="params-grid">
             <div class="param-item">
               <span class="param-name">p</span>
-              <span class="param-desc">скорость продукции новых вирионов инфицированными клетками</span>
+              <span class="param-desc">rate of virion production by a productively infected cell</span>
             </div>
             <div class="param-item">
               <span class="param-name">c</span>
-              <span class="param-desc">скорость естественного клиренса вируса</span>
+              <span class="param-desc">natural clearance rate of free virions</span>
             </div>
             <div class="param-item">
               <span class="param-name">φ</span>
-              <span class="param-desc">скорость нейтрализации вируса CTL</span>
+              <span class="param-desc">coefficient of immune-mediated neutralisation of free virus</span>
             </div>
             <div class="param-item">
               <span class="param-name">ε_prod</span>
-              <span class="param-desc">эффективность ингибиторов продукции вируса (АРТ)</span>
+              <span class="param-desc"><a class="anchor" href="#eprod">efficacy of viral production inhibitors (ART)</a></span>
             </div>
           </div>
         </Accordion>
@@ -123,66 +119,66 @@
               dC/dt = s<sub>C</sub> + (α·T·C)/(T·C + h) - d<sub>C</sub>·C - η<sub>C</sub>·C·I/(I+q)
             </code>
           </template>
-          <div class="description">динамика эффекторных иммунных клеток (CTL)</div>
+          <div class="description">dynamics of immune effector cells (CTLs)</div>
           <div class="params-grid">
             <div class="param-item">
               <span class="param-name">s_C</span>
-              <span class="param-desc">естественный приток CTL-клеток</span>
+              <span class="param-desc">basal influx of immune effector cells</span>
             </div>
             <div class="param-item">
               <span class="param-name">α</span>
-              <span class="param-desc">скорость активации CTL при стимуляции CD4+</span>
+              <span class="param-desc">maximum rate of effector immune-response stimulation</span>
             </div>
             <div class="param-item">
               <span class="param-name">h</span>
-              <span class="param-desc">коэффициент насыщения активации CTL</span>
+              <span class="param-desc">saturation parameter for immune stimulation</span>
             </div>
             <div class="param-item">
               <span class="param-name">d_C</span>
-              <span class="param-desc">скорость естественной гибели CTL</span>
+              <span class="param-desc">natural death rate of immune effector cells</span>
             </div>
             <div class="param-item">
               <span class="param-name">η_C</span>
-              <span class="param-desc">скорость истощения CTL</span>
+              <span class="param-desc">maximum rate of functional exhaustion of immune effector cells</span>
             </div>
             <div class="param-item">
               <span class="param-name">q</span>
-              <span class="param-desc">порог истощения CTL</span>
+              <span class="param-desc">characteristic infected-cell level for saturation of the exhaustion effect</span>
             </div>
           </div>
         </Accordion>
       </Accordion>
-      <Accordion title="Параметры антиретровирусной терапии">
+      <Accordion title="Antiretroviral Therapy">
         <template #icon>
           <IconMicroscope/>
         </template>
         <div class="params-grid">
           <div class="param-item">
             <span class="param-name">ε_inf</span>
-            <span class="param-desc">Эффективность препаратов, блокирующих заражение клеток</span>
+            <span class="param-desc" id="einf">The efficacy of therapy in reducing the formation of newly infected cells</span>
           </div>
           <div class="param-item">
             <span class="param-name">ε_prod</span>
-            <span class="param-desc">Эффективность препаратов, снижающих продукцию вируса</span>
+            <span class="param-desc" id="eprod">The efficacy of therapy in suppressing the production of new viral particles</span>
           </div>
         </div>
         <div class="therapy-modes">
-          <h4 class="therapy-modes__title">Рассматриваемые сценарии:</h4>
+          <h4 class="therapy-modes__title">Treatment scenarios:</h4>
           <div class="mode">
             <span class="mode-badge">WITHOUT</span>
-            <span>Без терапии</span>
+            <span>No therapy</span>
           </div>
           <div class="mode">
             <span class="mode-badge">THERAPY</span>
-            <span>Включение приема препаратов на γ-ый день</span>
+            <span>Treatment initiation on day γ</span>
           </div>
           <div class="mode">
             <span class="mode-badge">INTERRUPTION</span>
-            <span>Прием препаратов с периодичностью γ (сут)</span>
+            <span>Periodically varying treatment efficacy</span>
           </div>
           <div class="mode">
             <span class="mode-badge">RESISTANCE</span>
-            <span>Развитие резистентности (устойчивости) к препарату со скоростью γ</span>
+            <span>Decline in treatment efficacy</span>
           </div>
         </div>
       </Accordion>
@@ -296,6 +292,11 @@ const isOpen = computed(() => {
 
 .equation sub {
   font-size: 0.7rem;
+}
+
+.anchor {
+  text-decoration: none;
+  color: var(--color-primary);
 }
 
 </style>

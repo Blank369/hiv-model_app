@@ -24,7 +24,7 @@ def write_table(filename: str, simulation: dict, params: dict = None):
     with open(filepath, "w", encoding="utf-8") as file:
 
         if params:
-            file.write("=== ПАРАМЕТРЫ ===\n")
+            file.write("=== PARAMS ===\n")
             file.write(
                 json.dumps(
                     params,
@@ -34,7 +34,7 @@ def write_table(filename: str, simulation: dict, params: dict = None):
             )
             file.write("\n\n")
 
-        file.write("=== РЕЗУЛЬТАТЫ ===\n")
+        file.write("=== RESULTS ===\n")
         file.write(
             "t\tT\tL\tI\tV\tC\teps_inf\teps_prod\n"
         )

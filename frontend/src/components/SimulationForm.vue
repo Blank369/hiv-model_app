@@ -1,9 +1,9 @@
 <template>
-  <Panel title="Параметры модели">
+  <Panel title="Model Parameters">
     <template #icon>
       <IconGear/>
     </template>
-    <Accordion title="Начальные условия">
+    <Accordion title="Initial Conditions">
       <template #icon>
         <IconTable/>
       </template>
@@ -14,31 +14,31 @@
             :step="10"
             :min="0"
             :max="2000"
-            unit="кл/мкл"
+            unit="cells/µL"
             required
         />
         <NumberInput
-            label="L0 (латентные)"
+            label="L0 (latent)"
             v-model="localParams.initials.L"
             :step="1"
             :min="0"
-            unit="кл/мкл"
+            unit="cells/µL"
             required
         />
         <NumberInput
-            label="I0 (продуктивные)"
+            label="I0 (productively infected)"
             v-model="localParams.initials.I"
             :step="0.1"
             :min="0"
-            unit="кл/мкл"
+            unit="cells/µL"
             required
         />
         <NumberInput
-            label="V0 (вирус)"
+            label="V0 (virus)"
             v-model="localParams.initials.V"
             :step="10"
             :min="0"
-            unit="копий/мл"
+            unit="copies/mL"
             required
         />
         <NumberInput
@@ -46,19 +46,19 @@
             v-model="localParams.initials.C"
             :step="10"
             :min="0"
-            unit="кл/мкл"
+            unit="cells/µL"
             required
         />
       </div>
     </Accordion>
 
-    <Accordion title="Биологические параметры">
+    <Accordion title="Biological Parameters">
       <template #icon>
         <IconCells/>
       </template>
       <div class="param-group">
         <NumberInput
-            label="λ (приток CD4+)"
+            label="λ (CD4+ influx)"
             v-model="localParams.biological.lambda"
             :step="1"
             :min="0"
@@ -67,7 +67,7 @@
         />
 
         <NumberInput
-            label="r (пролиферация)"
+            label="r (proliferation)"
             v-model="localParams.biological.r"
             :step="0.01"
             :min="0"
@@ -77,7 +77,7 @@
         />
 
         <NumberInput
-            label="T_max (емкость)"
+            label="T_max (carrying capacity)"
             v-model="localParams.biological.T_max"
             :step="100"
             :min="0"
@@ -86,7 +86,7 @@
         />
 
         <NumberInput
-            label="d_T (гибель CD4+)"
+            label="d_T (CD4+ death)"
             v-model="localParams.biological.d_T"
             :step="0.001"
             :min="0"
@@ -95,7 +95,7 @@
         />
 
         <NumberInput
-            label="β (скорость заражения)"
+            label="β (infection rate)"
             v-model="localParams.biological.beta"
             :step="1e-8"
             :min="0"
@@ -104,7 +104,7 @@
         />
 
         <NumberInput
-            label="ρ (доля латентных)"
+            label="ρ (latent fraction)"
             v-model="localParams.biological.rho"
             :step="0.01"
             :min="0"
@@ -114,7 +114,7 @@
         />
 
         <NumberInput
-            label="a (реактивация)"
+            label="a (reactivation)"
             v-model="localParams.biological.a"
             :step="0.001"
             :min="0"
@@ -123,7 +123,7 @@
         />
 
         <NumberInput
-            label="δ_L (гибель латентных)"
+            label="δ_L (latent death)"
             v-model="localParams.biological.delta_L"
             :step="0.001"
             :min="0"
@@ -132,7 +132,7 @@
         />
 
         <NumberInput
-            label="δ_I (гибель продуктивных)"
+            label="δ_I (productively infected death)"
             v-model="localParams.biological.delta_I"
             :step="0.1"
             :min="0"
@@ -141,7 +141,7 @@
         />
 
         <NumberInput
-            label="κ (уничтожение CTL)"
+            label="κ (CTL-mediated killing)"
             v-model="localParams.biological.kappa"
             :step="0.01"
             :min="0"
@@ -151,13 +151,13 @@
       </div>
     </Accordion>
 
-    <Accordion title="Вирус и иммунитет">
+    <Accordion title="Virus and Immunity">
       <template #icon>
         <IconVirus/>
       </template>
       <div class="param-group">
         <NumberInput
-            label="p (продукция вируса)"
+            label="p (virion production)"
             v-model="localParams.virus.p"
             :step="10"
             :min="0"
@@ -166,7 +166,7 @@
         />
 
         <NumberInput
-            label="c (клиренс вируса)"
+            label="c (viral clearance)"
             v-model="localParams.virus.c"
             :step="1"
             :min="0"
@@ -175,7 +175,7 @@
         />
 
         <NumberInput
-            label="φ (нейтрализация CTL)"
+            label="φ (CTL-mediated neutralisation)"
             v-model="localParams.virus.phi"
             :step="0.001"
             :min="0"
@@ -184,7 +184,7 @@
         />
 
         <NumberInput
-            label="s_C (приток CTL)"
+            label="s_C (CTL influx)"
             v-model="localParams.immune.s_C"
             :step="0.1"
             :min="0"
@@ -193,7 +193,7 @@
         />
 
         <NumberInput
-            label="α (активация CTL)"
+            label="α (CTL activation)"
             v-model="localParams.immune.alpha"
             :step="0.01"
             :min="0"
@@ -202,7 +202,7 @@
         />
 
         <NumberInput
-            label="h (насыщение)"
+            label="h (saturation)"
             v-model="localParams.immune.h"
             :step="50"
             :min="0"
@@ -211,7 +211,7 @@
         />
 
         <NumberInput
-            label="d_C (гибель CTL)"
+            label="d_C (CTL death)"
             v-model="localParams.immune.d_C"
             :step="0.01"
             :min="0"
@@ -220,7 +220,7 @@
         />
 
         <NumberInput
-            label="η_C (истощение)"
+            label="η_C (exhaustion)"
             v-model="localParams.immune.eta_C"
             :step="0.01"
             :min="0"
@@ -229,7 +229,7 @@
         />
 
         <NumberInput
-            label="q (порог)"
+            label="q (threshold)"
             v-model="localParams.immune.q"
             :step="50"
             :min="0"
@@ -239,13 +239,13 @@
       </div>
     </Accordion>
 
-    <Accordion title="Антиретровирусная терапия">
+    <Accordion title="Antiretroviral Therapy">
       <template #icon>
         <IconCapsule/>
       </template>
       <div class="param-group">
         <SelectInput
-            label="Режим ε_inf"
+            label="ε_inf mode"
             v-model="localParams.therapy.mode_inf"
             :options="therapyOptions"
             required
@@ -271,7 +271,7 @@
         <hr/>
 
         <SelectInput
-            label="Режим ε_prod"
+            label="ε_prod mode"
             v-model="localParams.therapy.mode_prod"
             :options="therapyOptions"
             required
@@ -296,20 +296,20 @@
       </div>
     </Accordion>
 
-    <Accordion title="Время симуляции">
+    <Accordion title="Simulation Time">
       <template #icon>
         <IconTime/>
       </template>
       <div class="param-group">
         <NumberInput
-            label="T_max (дней)"
+            label="T_max (days)"
             v-model="localParams.sim.t_max"
             :step="50"
             :min="1"
             required
         />
         <SliderInput
-            label="Количество точек"
+            label="Number of points"
             v-model="localParams.sim.num_points"
             :min="1000"
             :max="10000"
@@ -330,7 +330,7 @@
       <template #icon>
         <IconLaboratory/>
       </template>
-      ЗАПУСТИТЬ
+      RUN SIMULATION
     </Button>
 
     <ProgressBar :loading="loading"/>
@@ -344,7 +344,7 @@
       <template #icon>
         <IconStop/>
       </template>
-      Остановить расчет
+      Stop simulation
     </Button>
   </Panel>
 </template>
@@ -396,10 +396,10 @@ const defaultParams = reactive({
 const localParams = reactive(defaultParams)
 
 const therapyOptions = [
-  {value: 'WITHOUT', label: 'Без терапии'},
-  {value: 'THERAPY', label: 'Включение на n-ый день'},
-  {value: 'INTERRUPTION', label: 'Прием с периодичностью γ'},
-  {value: 'RESISTANCE', label: 'Развитие резистентности'}
+  {value: 'WITHOUT', label: 'No therapy'},
+  {value: 'THERAPY', label: 'Initiation on day n'},
+  {value: 'INTERRUPTION', label: 'Administration with periodicity γ'},
+  {value: 'RESISTANCE', label: 'Development of resistance'}
 ]
 
 const emit = defineEmits(['run', 'abort'])

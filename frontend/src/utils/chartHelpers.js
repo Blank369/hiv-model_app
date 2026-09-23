@@ -1,5 +1,5 @@
 const XAxis = {
-    title: { display: true, text: 'Время (дни)' },
+    title: { display: true, text: 'dpi' },
     ticks: {
         callback: (value) => {
             return Math.round(value)
@@ -32,11 +32,11 @@ export function createChartOptions(yAxisConfig) {
 }
 
 export const cellChartOptions = createChartOptions({
-    title: { display: true, text: 'кл/мкл' }
+    title: { display: true, text: 'cells/µL' }
 })
 
 export const virusChartOptions = createChartOptions({
-    title: { display: true, text: 'копий/мл' },
+    title: { display: true, text: 'virions/mL' },
 })
 
 export const therapyChartOptions = createChartOptions({

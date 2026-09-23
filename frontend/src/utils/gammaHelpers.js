@@ -1,8 +1,8 @@
 export function getGammaLabel(mode) {
     switch (mode) {
-        case 'THERAPY': return 'День начала терапии'
-        case 'INTERRUPTION': return 'Период между приемами (сут)'
-        case 'RESISTANCE': return 'Скорость резистентности'
+        case 'THERAPY': return 'Day of therapy initiation'
+        case 'INTERRUPTION': return 'Interval between doses (days)'
+        case 'RESISTANCE': return 'Resistance development rate'
         default: return 'γ'
     }
 }

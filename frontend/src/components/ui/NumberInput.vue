@@ -39,9 +39,9 @@ const emit = defineEmits(['update:modelValue'])
 
 const error = computed(() => {
   const val = parseFloat(props.modelValue)
-  if (isNaN(val) && props.required) return 'Поле некорректно'
-  if (val < props.min) return `Минимум ${props.min}`
-  if (val > props.max) return `Максимум ${props.max}`
+  if (isNaN(val) && props.required) return 'The field is invalid'
+  if (val < props.min) return `Min ${props.min}`
+  if (val > props.max) return `Max ${props.max}`
   return null
 })
 

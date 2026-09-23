@@ -22,7 +22,7 @@ const props = defineProps({
 
   text: {
     type: String,
-    default: 'Выполняется расчет...'
+    default: 'Calculation in progress...'
   },
 
   max: {
