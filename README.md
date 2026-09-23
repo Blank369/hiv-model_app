@@ -24,15 +24,12 @@
 
 ### Running the frontend
 
-1. ```bash
-   cd frontend
-
-2. Install dependencies
+1. Install dependencies
     ```bash
    cd frontend
    npm install
     ```
-3. Start the dev server
+2. Start the dev server
     ```bash
    npm run dev
    ```
